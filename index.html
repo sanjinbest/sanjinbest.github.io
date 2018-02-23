@@ -74,22 +74,22 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>本章主要介绍四种垃圾收集算法。</p>
-<p>####标记-清除算法<br>标记-清除算法是最基础的算法，算法分为“标记”和“清除”两个阶段：</p>
+<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>标记-清除算法是最基础的算法，算法分为“标记”和“清除”两个阶段：</p>
 <ol>
 <li>标记：首先标记出所有需要回收的对象，标记过程可以参考<a href="https://www.jianshu.com/p/00b5c1218911" target="_blank" rel="noopener">《深入理解JAVA虚拟机》学习笔记–对象存活算法</a>。</li>
-<li>清除：对标记的对象进行清除。<br>######缺点：</li>
+<li>清除：对标记的对象进行清除。<h6 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h6></li>
 </ol>
 <ul>
 <li>效率，标记和清除两个过程的效率都不高。</li>
 <li>空间，标记清除后会产生大量的不连续内存碎片，在程序运行过程中需要分配较大对象时，无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。</li>
 </ul>
-<p>####复制算法<br>为了解决 <strong>效率</strong> 的问题，一种称为 “复制” 的收集算法出现了，它将内存按容量划分为大小相等的两块，每次只使用其中一块。当这一块内存用完后，就将还存活的对象复制到另外一块上，然后再把已使用过的内存空间一次清理掉。这种算法解决了内存碎片的复杂情况，但是代价是将内存缩小为了原来的一半。<br><strong><em>HotSpot 并没有按照 1:1 的比例来划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的 Survivor 空间，比例为 8:1:1。<br>当回收时，将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间。这样每次新生代中可用内存空间为整个新生代容量的90%(80%+10%) ，只有10%的内存会被“浪费”。</em></strong></p>
-<p>####标记-整理算法<br>复制收集算法在对象存活率较高时，就要进行较多的复制操作，效率会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。<br>固针对老年代的特点，提出了另一种“标记-整理”算法，具体过程为：</p>
+<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><p>为了解决 <strong>效率</strong> 的问题，一种称为 “复制” 的收集算法出现了，它将内存按容量划分为大小相等的两块，每次只使用其中一块。当这一块内存用完后，就将还存活的对象复制到另外一块上，然后再把已使用过的内存空间一次清理掉。这种算法解决了内存碎片的复杂情况，但是代价是将内存缩小为了原来的一半。<br><strong><em>HotSpot 并没有按照 1:1 的比例来划分内存空间，而是将内存分为一块较大的Eden空间和两块较小的 Survivor 空间，比例为 8:1:1。<br>当回收时，将Eden和Survivor中还存活着的对象一次性地复制到另外一块Survivor空间上，最后清理掉Eden和刚才用过的Survivor空间。这样每次新生代中可用内存空间为整个新生代容量的90%(80%+10%) ，只有10%的内存会被“浪费”。</em></strong></p>
+<h4 id="标记-整理算法"><a href="#标记-整理算法" class="headerlink" title="标记-整理算法"></a>标记-整理算法</h4><p>复制收集算法在对象存活率较高时，就要进行较多的复制操作，效率会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。<br>固针对老年代的特点，提出了另一种“标记-整理”算法，具体过程为：</p>
 <ol>
 <li>标记：标记过程与“标记-清除”算法的标记一样。</li>
 <li>整理：将所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。</li>
 </ol>
-<p>####分代收集算法<br>当前商业虚拟机的垃圾收集都采用分代收集算法，这种算法的思想是 “<strong>根据对象存活周期的不同将内存划分为几块，对不同区域采用不同的收集算法</strong>” 。</p>
+<h4 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h4><p>当前商业虚拟机的垃圾收集都采用分代收集算法，这种算法的思想是 “<strong>根据对象存活周期的不同将内存划分为几块，对不同区域采用不同的收集算法</strong>” 。</p>
 <ul>
 <li>新生代：新生代每次收集进都有大批对象死去，只有少量存活，采用 <strong>复制算法</strong> 只需要付出少量的存活对象复制成本就可以完成收集。</li>
 <li>老年代：因为对象存活率高、没有额外空间对它进行分配担保，就必须使用 <strong>标记-整理</strong> 或 <strong>标记-清除</strong> 算法来进行回收。</li>
@@ -98,7 +98,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/1. 可见性/" data-id="cjdzoq7q70000qt9kqi3umu12" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/1. 可见性/" data-id="cjdzou50y0000ry9ksp61c7te" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -134,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/你好-hexo/" data-id="cjdzoq7qf0002qt9k6n63axcv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/你好-hexo/" data-id="cjdzou5170002ry9k58fhe57b" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -179,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/hello-world/" data-id="cjdzoq7qc0001qt9k23xe40vt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/hello-world/" data-id="cjdzou5140001ry9kk48k1rnn" class="article-share-link">Teilen</a>
       
       
     </footer>

@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,21 +48,21 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -87,19 +87,19 @@
 <meta property="og:site_name" content="木子三金">
 <meta property="og:description" content="java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://www.sanjinbest.com/blog/JVM/JVM运行时数据区域/image.png">
+<meta property="og:image" content="http://www.sanjinbest.com/JVM/JVM运行时数据区域/image.png">
 <meta property="og:updated_time" content="2018-02-24T07:00:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM运行时数据区域">
 <meta name="twitter:description" content="java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁。">
-<meta name="twitter:image" content="http://www.sanjinbest.com/blog/JVM/JVM运行时数据区域/image.png">
+<meta name="twitter:image" content="http://www.sanjinbest.com/JVM/JVM运行时数据区域/image.png">
 
 
 
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
+    root: '/',
     scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -156,7 +156,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/"  class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">木子三金</span>
         <span class="logo-line-after"><i></i></span>
@@ -184,7 +184,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -194,7 +194,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -204,7 +204,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories" rel="section">
+          <a href="/categories" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -214,7 +214,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags" rel="section">
+          <a href="/tags" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -224,7 +224,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/blog/about/" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -265,12 +265,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/blog/JVM/JVM运行时数据区域/">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/JVM/JVM运行时数据区域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="木子三金">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -317,7 +317,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JVM/" itemprop="url" rel="index">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
                     <span itemprop="name">JVM</span>
                   </a>
                 </span>
@@ -334,7 +334,7 @@
 
           
           
-             <span id="/blog/JVM/JVM运行时数据区域/" class="leancloud_visitors" data-flag-title="JVM运行时数据区域">
+             <span id="/JVM/JVM运行时数据区域/" class="leancloud_visitors" data-flag-title="JVM运行时数据区域">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -366,7 +366,7 @@
 
       
         <p>java虚拟机在执行java程序的过程中会把它所管理的内存划分为<strong>若干个不同的数据区域</strong>。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着<strong>虚拟机进程</strong>的启动而存在，有些区域则依赖<strong>用户线程</strong>的启动和结束而建立和销毁。<br><a id="more"></a></p>
-<p><img src="/blog/JVM/JVM运行时数据区域/image.png" alt="JVM运行时数据区"></p>
+<p><img src="/JVM/JVM运行时数据区域/image.png" alt="JVM运行时数据区"></p>
 <h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>程序计数器（Program Counter Register）是<strong>线程私有</strong>的。是一块较小的内存空间，可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的<strong>概念模型</strong>里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令。</p>
 <h4 id="java虚拟机栈"><a href="#java虚拟机栈" class="headerlink" title="java虚拟机栈"></a>java虚拟机栈</h4><p>虚拟机栈（Java Virtual Machine Stacks）是<strong>线程私有</strong>的。java虚拟机栈是描述java方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧用来存储<strong>局部变量表</strong>、<strong>操作数栈</strong>、<strong>动态链接</strong>、<strong>方法出口</strong>等信息。每一个方法的调用直至执行完成，都对应着一个栈帧在虚拟机栈中入栈到出栈的过程。通常所说的“堆”中存储“栈”中运行中的“栈”指的就是虚拟机栈，或者说是虚拟机栈中的<strong>局部变量表</strong>。</p>
 <blockquote>
@@ -405,9 +405,9 @@
       
         <div class="post-tags">
           
-            <a href="/blog/tags/JVM/" rel="tag"># JVM</a>
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
           
-            <a href="/blog/tags/运行时区域/" rel="tag"># 运行时区域</a>
+            <a href="/tags/运行时区域/" rel="tag"># 运行时区域</a>
           
         </div>
       
@@ -420,7 +420,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/spring/spring-security-入门教程/" rel="next" title="spring security 入门教程">
+              <a href="/spring/spring-security-入门教程/" rel="next" title="spring security 入门教程">
                 <i class="fa fa-chevron-left"></i> spring security 入门教程
               </a>
             
@@ -430,7 +430,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/blog/JVM/对象存活算法/" rel="prev" title="对象存活算法">
+              <a href="/JVM/对象存活算法/" rel="prev" title="对象存活算法">
                 对象存活算法 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -507,7 +507,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
@@ -519,7 +519,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/blog/categories/index.html">
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
@@ -530,7 +530,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/blog/tags/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -660,57 +660,57 @@
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
-
-
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
-
 
 
   
 
 
-  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 

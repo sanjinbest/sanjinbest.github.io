@@ -40,7 +40,7 @@
 
   
   
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
 
 
@@ -48,21 +48,21 @@
 
 
 
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
 
 
 
@@ -95,7 +95,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    root: '/blog/',
+    root: '/',
     scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
@@ -153,7 +153,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/blog/"  class="brand" rel="start">
+      <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">木子三金</span>
         <span class="logo-line-after"><i></i></span>
@@ -181,7 +181,7 @@
       
         
         <li class="menu-item menu-item-home">
-          <a href="/blog/" rel="section">
+          <a href="/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
@@ -191,7 +191,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
@@ -201,7 +201,7 @@
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/blog/categories" rel="section">
+          <a href="/categories" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -211,7 +211,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/blog/tags" rel="section">
+          <a href="/tags" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
@@ -221,7 +221,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/blog/about/" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -262,12 +262,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/blog/JVM/内存模型/">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/JVM/内存模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="木子三金">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -281,7 +281,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/JVM/内存模型/" itemprop="url">内存模型</a></h1>
+                <a class="post-title-link" href="/JVM/内存模型/" itemprop="url">内存模型</a></h1>
         
 
         <div class="post-meta">
@@ -316,7 +316,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JVM/" itemprop="url" rel="index">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
                     <span itemprop="name">JVM</span>
                   </a>
                 </span>
@@ -333,7 +333,7 @@
 
           
           
-             <span id="/blog/JVM/内存模型/" class="leancloud_visitors" data-flag-title="内存模型">
+             <span id="/JVM/内存模型/" class="leancloud_visitors" data-flag-title="内存模型">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -368,7 +368,7 @@
           <p>Java虚拟机规范中试图定义一种Java内存模型（Java Memory Model, JMM）来屏蔽各种硬件和操作系统的内存访问差异，以实现让Java程序在各种平台下都能达到一致的内存访问效果。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/JVM/内存模型/#more" rel="contents">
+            <a class="btn" href="/JVM/内存模型/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -419,12 +419,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/blog/JVM/垃圾收集算法/">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/JVM/垃圾收集算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="木子三金">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -438,7 +438,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/JVM/垃圾收集算法/" itemprop="url">垃圾收集算法</a></h1>
+                <a class="post-title-link" href="/JVM/垃圾收集算法/" itemprop="url">垃圾收集算法</a></h1>
         
 
         <div class="post-meta">
@@ -473,7 +473,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JVM/" itemprop="url" rel="index">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
                     <span itemprop="name">JVM</span>
                   </a>
                 </span>
@@ -490,7 +490,7 @@
 
           
           
-             <span id="/blog/JVM/垃圾收集算法/" class="leancloud_visitors" data-flag-title="垃圾收集算法">
+             <span id="/JVM/垃圾收集算法/" class="leancloud_visitors" data-flag-title="垃圾收集算法">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -529,7 +529,7 @@
 </ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/JVM/垃圾收集算法/#more" rel="contents">
+            <a class="btn" href="/JVM/垃圾收集算法/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -580,12 +580,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/blog/JVM/对象存活算法/">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/JVM/对象存活算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="木子三金">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -599,7 +599,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/JVM/对象存活算法/" itemprop="url">对象存活算法</a></h1>
+                <a class="post-title-link" href="/JVM/对象存活算法/" itemprop="url">对象存活算法</a></h1>
         
 
         <div class="post-meta">
@@ -634,7 +634,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JVM/" itemprop="url" rel="index">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
                     <span itemprop="name">JVM</span>
                   </a>
                 </span>
@@ -651,7 +651,7 @@
 
           
           
-             <span id="/blog/JVM/对象存活算法/" class="leancloud_visitors" data-flag-title="对象存活算法">
+             <span id="/JVM/对象存活算法/" class="leancloud_visitors" data-flag-title="对象存活算法">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -686,7 +686,7 @@
           <p>在堆里存入放java世界中几乎所有的对象实例，垃圾收集器在对堆进行回收前，第一件事情就是要确定哪些对象还“活着”，哪些已经“死去”。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/JVM/对象存活算法/#more" rel="contents">
+            <a class="btn" href="/JVM/对象存活算法/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -737,12 +737,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/blog/JVM/JVM运行时数据区域/">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/JVM/JVM运行时数据区域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="木子三金">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -756,7 +756,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/JVM/JVM运行时数据区域/" itemprop="url">JVM运行时数据区域</a></h1>
+                <a class="post-title-link" href="/JVM/JVM运行时数据区域/" itemprop="url">JVM运行时数据区域</a></h1>
         
 
         <div class="post-meta">
@@ -791,7 +791,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/JVM/" itemprop="url" rel="index">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
                     <span itemprop="name">JVM</span>
                   </a>
                 </span>
@@ -808,7 +808,7 @@
 
           
           
-             <span id="/blog/JVM/JVM运行时数据区域/" class="leancloud_visitors" data-flag-title="JVM运行时数据区域">
+             <span id="/JVM/JVM运行时数据区域/" class="leancloud_visitors" data-flag-title="JVM运行时数据区域">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -843,7 +843,7 @@
           <p>java虚拟机在执行java程序的过程中会把它所管理的内存划分为<strong>若干个不同的数据区域</strong>。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着<strong>虚拟机进程</strong>的启动而存在，有些区域则依赖<strong>用户线程</strong>的启动和结束而建立和销毁。<br></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/JVM/JVM运行时数据区域/#more" rel="contents">
+            <a class="btn" href="/JVM/JVM运行时数据区域/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -894,12 +894,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/blog/spring/spring-security-入门教程/">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/spring/spring-security-入门教程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="木子三金">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -913,7 +913,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/spring/spring-security-入门教程/" itemprop="url">spring security 入门教程</a></h1>
+                <a class="post-title-link" href="/spring/spring-security-入门教程/" itemprop="url">spring security 入门教程</a></h1>
         
 
         <div class="post-meta">
@@ -948,7 +948,7 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/spring/" itemprop="url" rel="index">
+                  <a href="/categories/spring/" itemprop="url" rel="index">
                     <span itemprop="name">spring</span>
                   </a>
                 </span>
@@ -965,7 +965,7 @@
 
           
           
-             <span id="/blog/spring/spring-security-入门教程/" class="leancloud_visitors" data-flag-title="spring security 入门教程">
+             <span id="/spring/spring-security-入门教程/" class="leancloud_visitors" data-flag-title="spring security 入门教程">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1000,7 +1000,7 @@
           <p>本篇文章只作为spring security入门使用，具体深入内容请自行查询相关资料。<br></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/blog/spring/spring-security-入门教程/#more" rel="contents">
+            <a class="btn" href="/spring/spring-security-入门教程/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1082,7 +1082,7 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/blog/archives/">
+                <a href="/archives/">
               
                   <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
@@ -1094,7 +1094,7 @@
               
               
               <div class="site-state-item site-state-categories">
-                <a href="/blog/categories/index.html">
+                <a href="/categories/index.html">
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
@@ -1105,7 +1105,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/blog/tags/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -1219,53 +1219,53 @@
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
   
   
-    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
   
 
 
-  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
 
-  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
 
   
-  
-
   
 
   
 
+  
 
-  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 

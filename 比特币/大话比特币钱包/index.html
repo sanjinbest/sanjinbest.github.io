@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="比特币 钱包," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="个人认为对比特币钱包比较好的一篇介绍。转自知乎比特宾的回答。 冷钱包&amp;gt;手机轻钱包&amp;gt;靠谱交易所&amp;gt;小交易所 记下这个公式后，我们先来了解一下，什么是区块链钱包？什么是钱包地址？什么是私钥？放在交易所的币安全吗？">
+<meta name="keywords" content="比特币 钱包">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊比特币钱包">
+<meta property="og:url" content="http://www.sanjinbest.com/比特币/大话比特币钱包/index.html">
+<meta property="og:site_name" content="木子三金">
+<meta property="og:description" content="个人认为对比特币钱包比较好的一篇介绍。转自知乎比特宾的回答。 冷钱包&amp;gt;手机轻钱包&amp;gt;靠谱交易所&amp;gt;小交易所 记下这个公式后，我们先来了解一下，什么是区块链钱包？什么是钱包地址？什么是私钥？放在交易所的币安全吗？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-8.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-9.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-10.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-11.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-12.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-13.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-14.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-15.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-16.png">
+<meta property="og:updated_time" content="2019-04-26T02:42:58.178Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊聊比特币钱包">
+<meta name="twitter:description" content="个人认为对比特币钱包比较好的一篇介绍。转自知乎比特宾的回答。 冷钱包&amp;gt;手机轻钱包&amp;gt;靠谱交易所&amp;gt;小交易所 记下这个公式后，我们先来了解一下，什么是区块链钱包？什么是钱包地址？什么是私钥？放在交易所的币安全吗？">
+<meta name="twitter:image" content="http://www.sanjinbest.com/images/pasted-8.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.sanjinbest.com/比特币/大话比特币钱包/"/>
+
+
+
+
+
+  <title>聊聊比特币钱包 | 木子三金</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木子三金</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">JAVA JVM 程序 架构 框架 区块链</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/比特币/大话比特币钱包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子三金">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子三金">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">聊聊比特币钱包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T19:15:00+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/比特币/" itemprop="url" rel="index">
+                    <span itemprop="name">比特币</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/比特币/大话比特币钱包/" class="leancloud_visitors" data-flag-title="聊聊比特币钱包">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>个人认为对比特币钱包比较好的一篇介绍。<br>转自<a href="https://www.zhihu.com/question/21478404/answer/312332793" target="_blank" rel="noopener">知乎</a>比特宾的回答。</p>
+<p><strong>冷钱包&gt;手机轻钱包&gt;靠谱交易所&gt;小交易所</strong></p>
+<p>记下这个公式后，我们先来了解一下，什么是区块链钱包？什么是钱包地址？什么是私钥？放在交易所的币安全吗？</p>
+<a id="more"></a>
+<h3 id="区块链钱包"><a href="#区块链钱包" class="headerlink" title="区块链钱包"></a>区块链钱包</h3><p>和现实中的钱包一样，区块链钱包是为了更好的保护我们的数字货币资产。实现了个人财产不可侵犯、第三方未得到我们授权的情况下，无支配权。大白话说就是：是你的，就是你的，别人拿不到，也抢不走。</p>
+<h4 id="比特币钱包基本功能"><a href="#比特币钱包基本功能" class="headerlink" title="比特币钱包基本功能"></a>比特币钱包基本功能</h4><ol>
+<li>生成比特币地址</li>
+<li>接收比特币</li>
+<li>发出比特币</li>
+<li>生成并导出私钥</li>
+<li>对自己的每笔交易，进行签名核实</li>
+<li>保护你的资产</li>
+</ol>
+<p>如果说比特币是钱的话，你的钱包地址就是你的银行卡号，不论是别人给你汇钱，还是你给别人汇钱，都需要用到这个地址。说完了钱包，我们来说说比特币世界最重要的信息之一：<strong>私钥</strong>。</p>
+<p><img src="/images/pasted-8.png" alt="私钥"></p>
+<h4 id="私钥"><a href="#私钥" class="headerlink" title="私钥"></a>私钥</h4><p>这是你打开自己钱包大门的唯一不变钥匙，在你申请钱包的时候，系统自动提供给你。记住！千万不要截图留在手机里，或者透露给任何人。因为谁拥有了私钥，就相当于拥有了对这个钱包里所有资产的绝对控制权。如果被黑客盗取了，他就可以随时提币跑路。</p>
+<p>所以保存私钥安全的方法，就是<strong>用笔把私钥写在一张纸上，锁在家里的保险柜里。</strong>每个人都这么做，黑客可能很快要没饭吃了…</p>
+<p>说完了基本的概念，我们来说说钱包的种类，<strong>每种钱包的优点和缺点，以及适合人群。</strong></p>
+<h4 id="冷钱包"><a href="#冷钱包" class="headerlink" title="冷钱包"></a>冷钱包</h4><p>数字货币最安全的存储方式，没有之一。冷钱包是脱离网络连接的离线钱包。也就是说，你永远不会面临被网络黑客/木马袭击，出现丢币，盗币等情况，但因为操作相对复杂，不适合刚开始用闲钱玩币的小白。</p>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点:"></a>优点:</h5><ol>
+<li>安全等级MAX</li>
+<li>自己拥有私钥</li>
+<li>随时可以提币，转币</li>
+<li>真正实现了个人资产不可侵犯，不受别人监管</li>
+</ol>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><ol>
+<li>价格较贵（RMB1000+）</li>
+<li>只支持大部分主流币种，小币种（新的ICO）不能存在冷钱包里</li>
+<li>操作相对复杂</li>
+</ol>
+<h5 id="适宜人群"><a href="#适宜人群" class="headerlink" title="适宜人群"></a>适宜人群</h5><ul>
+<li>拥有价值10+比特币，准备长期持有，屯着不动，不炒短线交易的人。</li>
+</ul>
+<h5 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h5><ul>
+<li><a href="https://s.taobao.com/search?q=Ledger+Nano+S&amp;type=p&amp;tmhkh5=&amp;spm=a21wu.241046-global.a2227oh.d100&amp;from=sea_1_searchbutton&amp;catId=100" target="_blank" rel="noopener">Ledger Nano S</a> （目前市场性价比最好的冷钱包，方便好用，淘宝就能直接买到）<br><img src="/images/pasted-9.png" alt="Ledger Nano S"></li>
+</ul>
+<p><img src="/images/pasted-10.png" alt="Ledger Nano S 支持的币种"></p>
+<h4 id="手机轻钱包"><a href="#手机轻钱包" class="headerlink" title="手机轻钱包"></a>手机轻钱包</h4><p>在手机AppStore，电脑上可以直接下载的钱包。因为轻钱包的私钥也是掌握在自己手里，安全等级也是没的说。记住！一定要把私钥保管好，放到一个绝对安全的地方。</p>
+<h5 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h5><ol>
+<li>操作简单, 手机上免费下载后，可以直接使用</li>
+<li>自己拥有私钥，自己的币掌握在自己手里</li>
+</ol>
+<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><ol>
+<li>手机有一定几率被黑客攻击</li>
+<li>只支持大部分主流币种。很多拥有新技术的币，不支持存入手机钱包</li>
+</ol>
+<h5 id="适宜人群-1"><a href="#适宜人群-1" class="headerlink" title="适宜人群"></a>适宜人群</h5><p>闲钱屯币，ICO投资，不经常短线交易的人。</p>
+<h5 id="推荐-1"><a href="#推荐-1" class="headerlink" title="推荐"></a>推荐</h5><ol>
+<li><p><a href="http://bitpie.com/" target="_blank" rel="noopener">比特派</a> ：国内最安全，方便的轻钱包之一。钱包的设计和使用都不依赖于任何第三方管控。   就算比特派的设计团队没了，钱包里的币也是归你所有。<br><img src="/images/pasted-11.png" alt="比特派"></p>
+</li>
+<li><p><a href="https://www.blockchain.com/" target="_blank" rel="noopener">BlockChain</a>：全球著名的轻钱包，目前只支持：比特币和以太坊。<br><img src="/images/pasted-12.png" alt="比特派"></p>
+</li>
+<li><p><a href="https://token.im/" target="_blank" rel="noopener">imToken</a>：目前以太坊系列必备钱包。支持所有ERC20代币的存储，大多数ICO投资者的不二之选<br><img src="/images/pasted-13.png" alt="imToken"></p>
+</li>
+</ol>
+<h4 id="交易所"><a href="#交易所" class="headerlink" title="交易所"></a>交易所</h4><p>想问大家一个问题，我们存在交易所的币，我们真正拥有吗？不！钱包的私钥是在交易所手里，你账户上拥有的资产，只是交易所给你打的一张白条罢了。但为什么还有人把钱放在交易所呢？交易所解决的痛点就是方便快捷，还有一定的安全保障。</p>
+<p>假如你拥有很多不同的代币，如果全部自己掌控，估计要申请不同冷钱包，轻钱包，在线钱包，来分别存储不同种类的代币。同时要一口气管理6-7个钱包，就会变得十分琐碎、麻烦。但如果是存在交易所，你只需要记住你的账户密码，谷歌验证，就能把所有的币聚集在一起。还有交易所是专业机构管理，基本不会出现丢币，盗币等情况。就算被盗了，交易所一般也会给用户等值的补偿。</p>
+<p>对了！靠谱的交易所还会帮用户领免费的糖果（免费的币），真的是帮刚入门的小白省了太多心。</p>
+<h5 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h5><ol>
+<li>操作简单，普通人可以很快上手</li>
+<li>安全等级高（大部分交易所的钱包都是冷钱包管理）</li>
+<li>流动性高，交易简单迅速，当你想买入，卖出的时候，不用从其他钱包转入</li>
+<li>币种齐全，市场上的币一般都可以在交易所直接存储。</li>
+</ol>
+<h5 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h5><ol>
+<li>个人没有币的直接拥有权</li>
+<li>交易所账户密码可能被黑客盗取（所以一定要用谷歌二次验证）</li>
+<li>当交易所维护的时候，提币，充值可以会出现问题 </li>
+</ol>
+<h5 id="适宜人群-2"><a href="#适宜人群-2" class="headerlink" title="适宜人群"></a>适宜人群</h5><p>刚入门的小白，投资币种较多，短期交易频繁，需要随时提现</p>
+<h5 id="推荐-2"><a href="#推荐-2" class="headerlink" title="推荐"></a>推荐</h5><ol>
+<li><p><a href="https://www.huobipro.com/zh-cn/" target="_blank" rel="noopener">火币网</a>：中国最大的比特币、莱特币、以太坊、交易平台<br><img src="/images/pasted-14.png" alt="火币网"></p>
+</li>
+<li><p><a href="http://www.haogemenye.com/" target="_blank" rel="noopener">币安</a>：海外用户首选，交易费低，从来没出现过丢币，盗币<br><img src="/images/pasted-15.png" alt="币安"></p>
+</li>
+<li><p><a href="https://big.one/" target="_blank" rel="noopener">BIgone</a>：云币网的后代，安全系数高，定期会送很多免费糖果（免费的币）给用户<br><img src="/images/pasted-16.png" alt="BIgone"></p>
+</li>
+</ol>
+<p>最后就是一些小的交易所，他们是拥有你的钱包私钥的，意味着可以随时可以跑路，大家选择的时候一定要注意。</p>
+<p>关于钱包的知识就先讲这么，希望对大家有帮助</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/比特币-钱包/" rel="tag"># 比特币 钱包</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/一致性协议/一致性协议之三阶段提交/" rel="next" title="一致性协议之三阶段提交">
+                <i class="fa fa-chevron-left"></i> 一致性协议之三阶段提交
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/实用工具/VIM常用快捷键/" rel="prev" title="VIM常用快捷键">
+                VIM常用快捷键 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木子三金</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/31dcad916afc" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#区块链钱包"><span class="nav-number">1.</span> <span class="nav-text">区块链钱包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#比特币钱包基本功能"><span class="nav-number">1.1.</span> <span class="nav-text">比特币钱包基本功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#私钥"><span class="nav-number">1.2.</span> <span class="nav-text">私钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#冷钱包"><span class="nav-number">1.3.</span> <span class="nav-text">冷钱包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#优点"><span class="nav-number">1.3.1.</span> <span class="nav-text">优点:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">1.3.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#适宜人群"><span class="nav-number">1.3.3.</span> <span class="nav-text">适宜人群</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#推荐"><span class="nav-number">1.3.4.</span> <span class="nav-text">推荐</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#手机轻钱包"><span class="nav-number">1.4.</span> <span class="nav-text">手机轻钱包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#优点-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#适宜人群-1"><span class="nav-number">1.4.3.</span> <span class="nav-text">适宜人群</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#推荐-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">推荐</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交易所"><span class="nav-number">1.5.</span> <span class="nav-text">交易所</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#优点-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点："><span class="nav-number">1.5.2.</span> <span class="nav-text">缺点：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#适宜人群-2"><span class="nav-number">1.5.3.</span> <span class="nav-text">适宜人群</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#推荐-2"><span class="nav-number">1.5.4.</span> <span class="nav-text">推荐</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" align="center">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木子三金</span>
+
+</div>
+<div class="footer-custom" align="center">
+	<a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备17015067号</a>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("w4ChT6YdxXEsHjbhGGRwKyRS-gzGzoHsz", "pbRGAYRTC7uorxePlRL7XtlF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

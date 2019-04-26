@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java8,lambda,默认方法,批量处理," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JDK8 已经发布了有几年了，但平时很少会用到新增的特性。最近特意抽出了一些时间仔细的学习一下新特性，本文主要是关于Lambda表达式的内容。">
+<meta name="keywords" content="java8,lambda,默认方法,批量处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA 8 新增特性之Lambda表达式+方法引用">
+<meta property="og:url" content="http://www.sanjinbest.com/JAVA/JAVA-8-新增特性/index.html">
+<meta property="og:site_name" content="木子三金">
+<meta property="og:description" content="JDK8 已经发布了有几年了，但平时很少会用到新增的特性。最近特意抽出了一些时间仔细的学习一下新特性，本文主要是关于Lambda表达式的内容。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-26T02:42:58.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA 8 新增特性之Lambda表达式+方法引用">
+<meta name="twitter:description" content="JDK8 已经发布了有几年了，但平时很少会用到新增的特性。最近特意抽出了一些时间仔细的学习一下新特性，本文主要是关于Lambda表达式的内容。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.sanjinbest.com/JAVA/JAVA-8-新增特性/"/>
+
+
+
+
+
+  <title>JAVA 8 新增特性之Lambda表达式+方法引用 | 木子三金</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木子三金</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">JAVA JVM 程序 架构 框架 区块链</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/JAVA/JAVA-8-新增特性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子三金">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子三金">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JAVA 8 新增特性之Lambda表达式+方法引用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-23T16:39:00+08:00">
+                2018-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JAVA/" itemprop="url" rel="index">
+                    <span itemprop="name">JAVA</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/JAVA/JAVA-8-新增特性/" class="leancloud_visitors" data-flag-title="JAVA 8 新增特性之Lambda表达式+方法引用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JDK8 已经发布了有几年了，但平时很少会用到新增的特性。最近特意抽出了一些时间仔细的学习一下新特性，本文主要是关于Lambda表达式的内容。</p>
+<a id="more"></a>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>在正式介绍Lambda表达式前先要理解一下“闭包”的概念，和java对“闭包”的实现方式。</p>
+<h3 id="闭包是个啥？"><a href="#闭包是个啥？" class="headerlink" title="闭包是个啥？"></a>闭包是个啥？</h3><blockquote>
+<p>闭包就是能够读取其他函数内部变量的函数。例如在javascript中，只有函数内部的子函数才能读取局部变量，所以闭包可以理解成“定义在一个函数内部的函数“。在本质上，闭包是将函数内部和函数外部连接起来的桥梁。–摘自百度百科</p>
+</blockquote>
+<p>读起来不是特别好理解吧，文章《<a href="https://www.cnblogs.com/ssp2110/p/3797666.html" target="_blank" rel="noopener">深入理解Java闭包概念</a>》里有一段很好的解释：</p>
+<blockquote>
+<p>闭包能够将一个<strong><em>方法作为一个变量去存储</em></strong>，这个方法可以访问所在类的自由变量。<br>注：自由变量，除了局部变量的其它变量。</p>
+</blockquote>
+<p>说白了，就是一个变量存储的不在是实例对象，而是存储了一个可执行的方法。</p>
+<h3 id="JAVA里闭包是怎么实现的？"><a href="#JAVA里闭包是怎么实现的？" class="headerlink" title="JAVA里闭包是怎么实现的？"></a>JAVA里闭包是怎么实现的？</h3><p>我们先一步一步来解决这个问题：</p>
+<ol>
+<li>怎么用变量去存储方法？<pre><code>java里能够保存方法的变量指的就是普通的实例对象。
+</code></pre></li>
+<li>那么如何让这个实例对象访问到该对象所在类的自由变量？<pre><code>答案就是内部类，内部类能够访问到外部类的所有属性及方法，同时能够隐藏具体实现。
+</code></pre></li>
+<li>怎么将闭包传递到外部使用呢？<pre><code>可以让内部类实现通用接口，然后将内部类对象向上转型为接口类型。
+这个接口类型对象就可以理解为保存了方法的变量。
+</code></pre></li>
+</ol>
+<p>所以，在java里闭包就是通过<strong><em>内部类+接口</em></strong>来实现的。参考文章里有一个很好的例子，可以方便大家理解。<br>下面正式开始介绍JDK8的新特性。</p>
+<h2 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h2><p>jdk8新增的Lambda表达式功能是一个非常酷也非常好用的东西。</p>
+<p>它大概是这个样子，比如我们要实现多线程的功能，以前我们可能会这样写：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">threadDemo</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"I am a Runner!"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;).start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当我们有了Lambda之后，一行搞定<br><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public <span class="literal">void</span> threadDemo()&#123;</span><br><span class="line">	<span class="keyword">new</span> Thread<span class="function"><span class="params">(() -&gt; System.out.println(<span class="string">"I am a Runner!"</span>))</span>.<span class="title">start</span><span class="params">()</span>;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>SO COOL !</p>
+<h3 id="Lambda语法"><a href="#Lambda语法" class="headerlink" title="Lambda语法"></a>Lambda语法</h3><pre><code>(参数) -&gt; 单行语句/表达式 或者 （参数）-&gt; {代码块;}
+</code></pre><p>lambda语法包括3个部分</p>
+<ol>
+<li>括号+参数，代表了<strong><em>函数式接口</em></strong>里的方法，参数就是接口方法的参数。</li>
+<li>操作符 -&gt;</li>
+<li>方法体，方法体可以是表达式也可以是一个代码块。代码块必须使用{}。如果函数式接口的方法有返回值，需要进行return。</li>
+</ol>
+<p><em>上面的例子Runnable就是一个函数式接口，只包含了一个无参方法run()，返回值是void，所以lambda左边没有参数只有一对括号，右边也没有return语句，而且只是打印了一个字符串。</em></p>
+<h3 id="函数式接口"><a href="#函数式接口" class="headerlink" title="函数式接口"></a>函数式接口</h3><p>在java中lambda表达式无法单独的出现，它需要一个函数式接口来承载。lambda的表达式方法体就是对函数接口的具体实现。</p>
+<p>函数式接口（functional interface），一个接口如果只包含一个方法，那这个接口就叫作函数式接口，比如上例中的Runnable接口，就是一个函数式接口。</p>
+<p>jdk8提供了一个注解@FunctionalInterface，这个注解的作用就是声明该接口是函数式接口，当然这个注解不是必须的。不过建议对函数式接口都加上该注解，方便其它开发者直观的知道该接口为函数式接口。</p>
+<p>Lambda的用法非常简单也很容易理解，所以这里不在多说。</p>
+<h3 id="方法引用"><a href="#方法引用" class="headerlink" title="方法引用"></a>方法引用</h3><p>lambda表达式箭头（-&gt;）右边是要实现的执行代码。但有时候，右边实现的执行代码已经有类实现了我们想要的功能，这时就可以使用方法引用来直接调用现有类的功能方法。</p>
+<p>看一个例子，jdk8提供了一个函数式接口<strong>Consumer</strong>，其中有一个方法<strong>accept</strong>接收一个参数，下面我们实现一个打印字符串的功能。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Consumer&lt;<span class="keyword">String</span>&gt; consumer = <span class="built_in">str</span> -&gt; System.out.<span class="built_in">println</span>(<span class="built_in">str</span>);</span><br><span class="line">consumer.accept(<span class="string">"Hello World!"</span>);</span><br></pre></td></tr></table></figure>
+<p>这里使用到的System.out.println就是一个已经实现了打印字符串功能的类，所以可以直接调用，像下边这样<br><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Consumer&lt;<span class="built_in">String</span>&gt; consumer - <span class="built_in">str</span> -&gt; System.out::println;</span><br><span class="line">consumer.accept(<span class="string">"Hello World!"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这种调用方式就是方法引用。</p>
+<p><strong><em>方法引用使用操作符“::”实现。左边是类名或实例名，右边是方法名或者是“new”（构造器引用）</em></strong></p>
+<p>方法引用共有4种类型：</p>
+<ul>
+<li>静态方法引用<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//lambda写法</span><br><span class="line"><span class="function"><span class="keyword">Function</span></span>&lt;Long,Long&gt; <span class="function"><span class="keyword">function</span></span> = x -&gt; Math.<span class="built_in">abs</span>(x);</span><br><span class="line"><span class="function"><span class="keyword">function</span>.<span class="title">apply</span><span class="params">(-3L)</span></span>;</span><br><span class="line">//静态方法引用</span><br><span class="line"><span class="function"><span class="keyword">Function</span></span>&lt;Long,Long&gt; <span class="function"><span class="keyword">function</span></span> = Math::<span class="built_in">abs</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span>.<span class="title">apply</span><span class="params">(-3L)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>abs是Math类的一个静态方法，Function中的唯一抽象方法apply接收的参数列表与abs方法相同。</p>
+<ul>
+<li>对象引用的方法引用<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lambda写法</span></span><br><span class="line">Consumer&lt;<span class="built_in">String</span>&gt; consumer = <span class="built_in">str</span> -&gt; System.out.println(<span class="built_in">str</span>);</span><br><span class="line">consumer.accept(<span class="string">"Hello World!"</span>);</span><br><span class="line"><span class="comment">//对象引用的方法引用</span></span><br><span class="line">Consumer&lt;<span class="built_in">String</span>&gt; consumer - <span class="built_in">str</span> -&gt; System.out::println;</span><br><span class="line">consumer.accept(<span class="string">"Hello World!"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里的System.out其实就是PrintStream类型的对象引用,而println是一个实例的方法。</p>
+<ul>
+<li>类的方法引用<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lambda写法</span></span><br><span class="line">BiPredicate&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; b = (x,y) -&gt; x.<span class="keyword">equals</span>(y);</span><br><span class="line">b.test(<span class="string">"I'm King!"</span>,<span class="string">"I' King too!"</span>);</span><br><span class="line"><span class="comment">//类的方法引用</span></span><br><span class="line">BiPredicate&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; b = <span class="built_in">String</span>:<span class="keyword">equals</span>;</span><br><span class="line">b.test(<span class="string">"I'm King!"</span>,<span class="string">"I' King too!"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果lambda表达式的参数列表中，第一个参数是实例方法的调用者，第二个参数是实例方法的参数的情况下，才可以这样调用。上面的例子第一个String是调用者，第二个String是参数，大概就是这样的意思: “I’m King!”.equals(“I’ King too!”)</p>
+<ul>
+<li>构造方法引用<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lambda写法</span></span><br><span class="line">Function&lt;Integer, StringBuffer&gt; <span class="function"><span class="keyword">fun</span> = n -&gt; new <span class="title">StringBuffer</span><span class="params">(n)</span></span>; </span><br><span class="line">StringBuffer buffer = <span class="function"><span class="keyword">fun</span>.<span class="title">apply</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line"><span class="comment">//构造方法引用</span></span><br><span class="line">Function&lt;Integer, StringBuffer&gt; <span class="function"><span class="keyword">fun</span> = StringBuffer::new;</span></span><br><span class="line">StringBuffer buffer = <span class="function"><span class="keyword">fun</span>.<span class="title">apply</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>总结，本文主要介绍了jdk8的lambda表达式和方法引用，同时加了一些闭包相关的内容。关于文章里的例子个人感觉没有很好的体现新特性的强大之处。由于本人目前能力有限，同时还未在工作中尝试使用新特性，固还无法找到更好的例子，待后续更新吧。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://www.cnblogs.com/ssp2110/p/3797666.html" target="_blank" rel="noopener">深入理解Java闭包概念</a></li>
+<li><a href="https://my.oschina.net/benhaile?tab=newest&amp;catalogId=0" target="_blank" rel="noopener">OSC闲人的相关文章</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java8/" rel="tag"># java8</a>
+          
+            <a href="/tags/lambda/" rel="tag"># lambda</a>
+          
+            <a href="/tags/默认方法/" rel="tag"># 默认方法</a>
+          
+            <a href="/tags/批量处理/" rel="tag"># 批量处理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/协议/JSON-RPC规范/" rel="next" title="JSON-RPC规范">
+                <i class="fa fa-chevron-left"></i> JSON-RPC规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/英语/中学英语/" rel="prev" title="中学英语语法知识体系-思维导图">
+                中学英语语法知识体系-思维导图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木子三金</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/31dcad916afc" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#闭包"><span class="nav-number">1.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包是个啥？"><span class="nav-number">1.1.</span> <span class="nav-text">闭包是个啥？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JAVA里闭包是怎么实现的？"><span class="nav-number">1.2.</span> <span class="nav-text">JAVA里闭包是怎么实现的？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda"><span class="nav-number">2.</span> <span class="nav-text">Lambda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda语法"><span class="nav-number">2.1.</span> <span class="nav-text">Lambda语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式接口"><span class="nav-number">2.2.</span> <span class="nav-text">函数式接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法引用"><span class="nav-number">2.3.</span> <span class="nav-text">方法引用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" align="center">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木子三金</span>
+
+</div>
+<div class="footer-custom" align="center">
+	<a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备17015067号</a>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("w4ChT6YdxXEsHjbhGGRwKyRS-gzGzoHsz", "pbRGAYRTC7uorxePlRL7XtlF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

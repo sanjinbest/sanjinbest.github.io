@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="协议,RESTFul," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文地址：Restful Api 实战设计指南 基本原则关注点分离 关注点分离（Separation of concerns，SOC）是对只与“特定概念、目标”（关注点）相关联的软件组成部分进行“标识、封装和操纵”的能力，即标识、封装和操纵关注点的能力。是处理复杂性的一个原则。由于关注点混杂在一起会导致复杂性大大增加，所以能够把不同的关注点分离开来，分别处理就是处理复杂性的一个原则，一种方法。–">
+<meta name="keywords" content="协议,RESTFul">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Restful Api 实战设计指南">
+<meta property="og:url" content="http://www.sanjinbest.com/协议/Restful-Api-实战设计指南/index.html">
+<meta property="og:site_name" content="木子三金">
+<meta property="og:description" content="原文地址：Restful Api 实战设计指南 基本原则关注点分离 关注点分离（Separation of concerns，SOC）是对只与“特定概念、目标”（关注点）相关联的软件组成部分进行“标识、封装和操纵”的能力，即标识、封装和操纵关注点的能力。是处理复杂性的一个原则。由于关注点混杂在一起会导致复杂性大大增加，所以能够把不同的关注点分离开来，分别处理就是处理复杂性的一个原则，一种方法。–">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-26T02:42:58.174Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Restful Api 实战设计指南">
+<meta name="twitter:description" content="原文地址：Restful Api 实战设计指南 基本原则关注点分离 关注点分离（Separation of concerns，SOC）是对只与“特定概念、目标”（关注点）相关联的软件组成部分进行“标识、封装和操纵”的能力，即标识、封装和操纵关注点的能力。是处理复杂性的一个原则。由于关注点混杂在一起会导致复杂性大大增加，所以能够把不同的关注点分离开来，分别处理就是处理复杂性的一个原则，一种方法。–">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.sanjinbest.com/协议/Restful-Api-实战设计指南/"/>
+
+
+
+
+
+  <title>Restful Api 实战设计指南 | 木子三金</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木子三金</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">JAVA JVM 程序 架构 框架 区块链</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/协议/Restful-Api-实战设计指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子三金">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子三金">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Restful Api 实战设计指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-07T11:29:00+08:00">
+                2018-11-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/协议/" itemprop="url" rel="index">
+                    <span itemprop="name">协议</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/协议/Restful-Api-实战设计指南/" class="leancloud_visitors" data-flag-title="Restful Api 实战设计指南">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文地址：<a href="https://segmentfault.com/a/1190000016209061" target="_blank" rel="noopener">Restful Api 实战设计指南</a></p>
+<h1 id="基本原则"><a href="#基本原则" class="headerlink" title="基本原则"></a>基本原则</h1><h2 id="关注点分离"><a href="#关注点分离" class="headerlink" title="关注点分离"></a>关注点分离</h2><blockquote>
+<p>关注点分离（Separation of concerns，SOC）是对只与“特定概念、目标”（关注点）相关联的软件组成部分进行“标识、封装和操纵”的能力，即标识、封装和操纵关注点的能力。是处理复杂性的一个原则。由于关注点混杂在一起会导致复杂性大大增加，所以能够把不同的关注点分离开来，分别处理就是处理复杂性的一个原则，一种方法。– 维基百科</p>
+</blockquote>
+<ul>
+<li>大问题拆分成个个小问题</li>
+<li>万能接口拆分成独立的小接口</li>
+</ul>
+<a id="more"></a>
+<h2 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h2><p>URL风格 URL风格有以下三种:</p>
+<ul>
+<li>驼峰式: userData</li>
+<li>中划线式: user-data</li>
+<li>下划线式: user_data</li>
+</ul>
+<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>版本管理一般有两种:</p>
+<ul>
+<li>位于url中的版本标识： <a href="http://example.com/api/v1/" target="_blank" rel="noopener">http://example.com/api/v1/</a></li>
+<li>位于请求头中的版本标识：Accept: application/vnd.redkavasyl+json; version=2.0</li>
+</ul>
+<h1 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h1><h2 id="最小化路径嵌套"><a href="#最小化路径嵌套" class="headerlink" title="最小化路径嵌套"></a>最小化路径嵌套</h2><p>过深的路径嵌套，会导致资源之间的关系显得非常混乱。<br>最多3层嵌套为佳，超过4层，则要考虑拆分接口。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span> bad</span><br><span class="line"><span class="string">/orgs/</span>&#123;org_id&#125;<span class="string">/apps/</span>&#123;app_id&#125;<span class="string">/dynos/</span>&#123;dyno_id&#125;</span><br><span class="line"></span><br><span class="line"><span class="string">//</span> good</span><br><span class="line"><span class="string">/orgs/</span>&#123;org_id&#125;</span><br><span class="line"><span class="string">/orgs/</span>&#123;org_id&#125;<span class="string">/apps</span></span><br><span class="line"><span class="string">/apps/</span>&#123;app_id&#125;</span><br><span class="line"><span class="string">/apps/</span>&#123;app_id&#125;<span class="string">/dynos</span></span><br><span class="line"><span class="string">/dynos/</span>&#123;dyno_id&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="URL参数优先原则"><a href="#URL参数优先原则" class="headerlink" title="URL参数优先原则"></a>URL参数优先原则</h2><p>HTTP可以在三个位置携带信息</p>
+<ol>
+<li>URL 包括 path, 查询字符串</li>
+<li>headers 包括请求头、响应头</li>
+<li>body 包括请求体、响应体</li>
+</ol>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/call/<span class="symbol">:callId/hold</span></span><br><span class="line">/call/callId?action=hold</span><br></pre></td></tr></table></figure>
+<p>非敏感参数放在URL中以下好处</p>
+<ul>
+<li>分析日志会更方便 一般日志系统都会打印出请求的url, 而不会打印body</li>
+<li>减少请求体重传输的数据量</li>
+</ul>
+<h2 id="资源名"><a href="#资源名" class="headerlink" title="资源名"></a>资源名</h2><ul>
+<li>资源名建议使用复数形式</li>
+<li>建议使用字典中能查到单词，不要随意起名字</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/calls/</span></span><br><span class="line"><span class="regexp">/users/</span></span><br><span class="line"><span class="regexp">/agents/</span></span><br></pre></td></tr></table></figure>
+<h2 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h2><p>理解请求方法在http, sql, file的深层含义</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>创建</th>
+<th>查询</th>
+<th>修改</th>
+<th>删除</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP(web层)</td>
+<td>POST</td>
+<td>GET</td>
+<td>PUT</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>SQL(数据库层)</td>
+<td>INSERT</td>
+<td>SELECT</td>
+<td>UPDATE</td>
+<td>DELETE</td>
+</tr>
+<tr>
+<td>FILE(文件系统层)</td>
+<td>CREATE</td>
+<td>READ</td>
+<td>UPDATE</td>
+<td>DELETE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="查询参数"><a href="#查询参数" class="headerlink" title="查询参数"></a>查询参数</h2><h3 id="翻页参数-page-pageSize"><a href="#翻页参数-page-pageSize" class="headerlink" title="翻页参数 page, pageSize"></a>翻页参数 page, pageSize</h3><ul>
+<li>一个系统，应当统一翻页参数，例如都叫page, pageSize</li>
+<li>一个系统，应当统一起始页码，要么都从1开始，要么都从0开始。建议从1开始。</li>
+<li>pageSize应当有默认值和最大值限制。</li>
+</ul>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/agents?page=<span class="number">0</span>&amp;pageSize=<span class="number">20</span></span><br></pre></td></tr></table></figure>
+<h3 id="投影参数-fields"><a href="#投影参数-fields" class="headerlink" title="投影参数 fields"></a>投影参数 fields</h3><p>restful接口返回的数据格式往往都是写死的，例如查询agent信息，也许你要的只是agent姓名和年龄字段，但是往往获取到一个agent的所有字段信息。</p>
+<p>如果无法自定义返回字段，那么响应体往往很多无用的信息。</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//bad</span></span><br><span class="line">/agents?minAge=<span class="number">12</span></span><br><span class="line"></span><br><span class="line">[&#123;</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"wdd"</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="string">"12"</span>,</span><br><span class="line">  <span class="string">"address"</span>:<span class="string">"ss"</span>,</span><br><span class="line">  <span class="string">"address"</span>:<span class="string">"ss"</span>,</span><br><span class="line">  <span class="string">"org"</span>:&#123;</span><br><span class="line">    <span class="string">"children"</span>: &#123;</span><br><span class="line">      <span class="string">""</span></span><br><span class="line">      ....</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ....</span><br><span class="line">&#125;,&#123;</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"ddw"</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="string">"12"</span>,</span><br><span class="line">  <span class="string">"address"</span>:<span class="string">"ss"</span>,</span><br><span class="line">  <span class="string">"org"</span>:&#123;</span><br><span class="line">    <span class="string">"children"</span>: &#123;</span><br><span class="line">      <span class="string">""</span></span><br><span class="line">      ....</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ....</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// better 只要获取agent name 和 age字段</span></span><br><span class="line">/<span class="built_in">agents</span>?fields=<span class="built_in">name</span>,age&amp;minAge=<span class="number">12</span></span><br><span class="line"></span><br><span class="line">[&#123;</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"wdd"</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="string">"12"</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">  <span class="string">"name"</span>:<span class="string">"ddw"</span>,</span><br><span class="line">  <span class="string">"age"</span>:<span class="string">"12"</span></span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure>
+<h3 id="控制器参数-actions"><a href="#控制器参数-actions" class="headerlink" title="控制器参数 actions"></a>控制器参数 actions</h3><p>对于同一资源，当需要改变资源时，有时候仅仅使用PUT，无法准确描述其动作。但是restful风格其实并不建议在path中使用动词。</p>
+<p>所以对于此种情况，建议增加action, 将信息放在查询字符串中。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// bad</span></span><br><span class="line"><span class="meta-keyword">/pets/</span>dogs/:id<span class="meta-keyword">/actions/</span>run</span><br><span class="line"><span class="meta-keyword">/pets/</span>dogs/:id<span class="meta-keyword">/actions/</span>eat</span><br><span class="line"><span class="meta-keyword">/pets/</span>dogs/:id<span class="meta-keyword">/actions/</span>bark</span><br><span class="line"></span><br><span class="line"><span class="comment">// better</span></span><br><span class="line"><span class="meta-keyword">/pets/</span>dogs/:id?action=run</span><br><span class="line"><span class="meta-keyword">/pets/</span>dogs/:id?action=eat</span><br><span class="line"><span class="meta-keyword">/pets/</span>dogs/:id?action=bark</span><br></pre></td></tr></table></figure>
+<h3 id="其他字段查询参数"><a href="#其他字段查询参数" class="headerlink" title="其他字段查询参数"></a>其他字段查询参数</h3><ul>
+<li>字段查询应当在符合业务需求的前提下，尽量少的提供查询维度。</li>
+<li>查询参数的设计，应当尽可能考虑要命中索引。这样才能避免在数据量剧增时，导致查询性能消耗极大。</li>
+</ul>
+<h2 id="使用JSON格式的body"><a href="#使用JSON格式的body" class="headerlink" title="使用JSON格式的body"></a>使用JSON格式的body</h2><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST https:<span class="string">//service.com/apps</span> \</span><br><span class="line">    -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">    -d '&#123;<span class="string">"name"</span>: <span class="string">"demoapp"</span>&#125;'</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"01234567-89ab-cdef-0123-456789abcdef"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"demoapp"</span>,</span><br><span class="line">  <span class="string">"owner"</span>: &#123;</span><br><span class="line">    <span class="string">"email"</span>: <span class="string">"username@example.com"</span>,</span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"01234567-89ab-cdef-0123-456789abcdef"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="安全限制"><a href="#安全限制" class="headerlink" title="安全限制"></a>安全限制</h2><h3 id="URL参数长度限制"><a href="#URL参数长度限制" class="headerlink" title="URL参数长度限制"></a>URL参数长度限制</h3><p>如果url中有数组类型的查询参数，则需要考虑数组支持最大长度。因为查询参数最终将拼接到url中，而浏览器对url的长度是有限制的。为了保证所有浏览器都可以兼容，<em>最好将url的长度保持在低于2000字符</em>。</p>
+<p>如果请求体url太长，可以给与414的状态码回复</p>
+<table>
+<thead>
+<tr>
+<th>Browser</th>
+<th>Address bar</th>
+<th>document.location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome</td>
+<td>32779</td>
+<td>&gt;64k</td>
+</tr>
+<tr>
+<td>Android</td>
+<td>8192</td>
+<td>&gt;64k</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>&gt;64k</td>
+<td>&gt;64k</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>&gt;64k</td>
+<td>&gt;64k</td>
+</tr>
+<tr>
+<td>IE11</td>
+<td>2047</td>
+<td>5120</td>
+</tr>
+<tr>
+<td>Edge 16</td>
+<td>2047</td>
+<td>10240</td>
+</tr>
+</tbody>
+</table>
+<h3 id="请求体body大小限制"><a href="#请求体body大小限制" class="headerlink" title="请求体body大小限制"></a>请求体body大小限制</h3><p>太大的请求体，对服务端都是有压力的，有可能造成服务崩溃。应当在接口设计阶段，考虑到接口支持的最大请求体size，当请求体超过最大请求体时，应当直接回复413状态码。</p>
+<h1 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h1><h2 id="统一资源名称"><a href="#统一资源名称" class="headerlink" title="统一资源名称"></a>统一资源名称</h2><p>同一个资源名称，在不同接口响应体中，应当具有相同的字段名。</p>
+<p>例如订单号，在A接口中叫做orderID, 在B接口中叫做orderNo。应当统一成一个字段名称。</p>
+<h2 id="提供Request-Id"><a href="#提供Request-Id" class="headerlink" title="提供Request-Id"></a>提供Request-Id</h2><p>一个请求异常了，如果没有一个请求的唯一id, 那么只能按照时间范围去排查日志，在日志量大的情况下，也是很难找到相应日志的。</p>
+<p>所以，建议在响应头中加入一个字段Request-Id，建议用uuid。在将一个请求写入日志中时，同时写入该请求的request-id。由于每个请求uuid都是唯一的，排查问题时会非常方便。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="selector-tag">Request-Id</span>: 3<span class="selector-tag">b99e3e0-7598-11e8-90be-95472fb3ecbd</span></span><br><span class="line"><span class="selector-tag">date</span>: <span class="selector-tag">Tue</span>, 28 <span class="selector-tag">Aug</span> 2018 13<span class="selector-pseudo">:07</span><span class="selector-pseudo">:53</span> <span class="selector-tag">GMT</span></span><br><span class="line"><span class="selector-tag">expires</span>: <span class="selector-tag">Thu</span>, 19 <span class="selector-tag">Nov</span> 1981 08<span class="selector-pseudo">:52</span><span class="selector-pseudo">:00</span> <span class="selector-tag">GMT</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h2 id="合适的状态码"><a href="#合适的状态码" class="headerlink" title="合适的状态码"></a>合适的状态码</h2><ul>
+<li><p>最常用的状态码</p>
+<ul>
+<li><p>1xx Informational</p>
+<ul>
+<li>100 Continue</li>
+<li>101 Switching Protocols</li>
+<li>102 Processing (WebDAV)</li>
+</ul>
+</li>
+<li><p>2xx Success</p>
+<ul>
+<li>200 OK</li>
+<li>201 Created</li>
+<li>202 Accepted</li>
+<li>203 Non-Authoritative Information</li>
+<li>204 No Content</li>
+<li>205 Reset Content</li>
+<li>206 Partial Content</li>
+<li>207 Multi-Status (WebDAV)</li>
+<li>208 Already Reported (WebDAV)</li>
+<li>226 IM Used</li>
+</ul>
+</li>
+<li><p>3xx Redirection</p>
+<ul>
+<li>300 Multiple Choices</li>
+<li>301 Moved Permanently</li>
+<li>302 Found</li>
+<li>303 See Other</li>
+<li>304 Not Modified</li>
+<li>305 Use Proxy</li>
+<li>306 (Unused)</li>
+<li>307 Temporary Redirect</li>
+<li>308 Permanent Redirect (experimental)</li>
+</ul>
+</li>
+<li><p>4xx Client Error</p>
+<ul>
+<li>400 Bad Request</li>
+<li>401 Unauthorized</li>
+<li>402 Payment Required</li>
+<li>403 Forbidden</li>
+<li>404 Not Found</li>
+<li>405 Method Not Allowed</li>
+<li>406 Not Acceptable</li>
+<li>407 Proxy Authentication Required</li>
+<li>408 Request Timeout</li>
+<li>409 Conflict</li>
+<li>410 Gone</li>
+<li>411 Length Required</li>
+<li>412 Precondition Failed</li>
+<li>413 Request Entity Too Large</li>
+<li>414 Request-URI Too Long</li>
+<li>415 Unsupported Media Type</li>
+<li>416 Requested Range Not Satisfiable</li>
+<li>417 Expectation Failed</li>
+<li>418 I’m a teapot (RFC 2324)</li>
+<li>420 Enhance Your Calm (Twitter)</li>
+<li>422 Unprocessable Entity (WebDAV)</li>
+<li>423 Locked (WebDAV)</li>
+<li>424 Failed Dependency (WebDAV)</li>
+<li>425 Reserved for WebDAV</li>
+<li>426 Upgrade Required</li>
+<li>428 Precondition Required</li>
+<li>429 Too Many Requests</li>
+<li>431 Request Header Fields Too Large</li>
+<li>444 No Response (Nginx)</li>
+<li>449 Retry With (Microsoft)</li>
+<li>450 Blocked by Windows Parental Controls (Microsoft)</li>
+<li>451 Unavailable For Legal Reasons</li>
+<li>499 Client Closed Request (Nginx)</li>
+</ul>
+</li>
+<li><p>5xx Server Error</p>
+<ul>
+<li>500 Internal Server Error</li>
+<li>501 Not Implemented</li>
+<li>502 Bad Gateway</li>
+<li>503 Service Unavailable</li>
+<li>504 Gateway Timeout</li>
+<li>505 HTTP Version Not Supported</li>
+<li>506 Variant Also Negotiates (Experimental)</li>
+<li>507 Insufficient Storage (WebDAV)</li>
+<li>508 Loop Detected (WebDAV)</li>
+<li>509 Bandwidth Limit Exceeded (Apache)</li>
+<li>510 Not Extended</li>
+<li>511 Network Authentication Required</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="统一的错误模型"><a href="#统一的错误模型" class="headerlink" title="统一的错误模型"></a>统一的错误模型</h2><p>有时候错误的状态码无法准确描述其错误类型，建议可以提供唯一的枚举类型的id来表明具体错误类型。</p>
+<ul>
+<li>message 只是给开发者看的，不要把这个错误信息直接弹窗告诉最终用户，或者可以根据id字段，翻译成具体的提示信息，告诉最终用户。<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"id"</span>:      <span class="string">"rate_limit"</span>,</span><br><span class="line">  <span class="attr">"message"</span>: <span class="string">"Account reached its API rate limit."</span>,</span><br><span class="line">  <span class="attr">"url"</span>:     <span class="string">"https://docs.service.com/rate-limits"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>或者是提供资源的唯一id<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    id: '3b99e3e0-<span class="number">7598-11</span>e8-90be-<span class="number">9547</span>2fb3ecbd',</span><br><span class="line">    ...</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    id: '3b99e3e0-<span class="number">7598-11</span>e8-90be-<span class="number">9547</span>2fb3ecbd',</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<h2 id="小化响应体"><a href="#小化响应体" class="headerlink" title="小化响应体"></a>小化响应体</h2><ul>
+<li>页面上不展示该数据，就不要将该数据添加到响应体中</li>
+<li>不要出现无法预知数组长度的数组嵌套，应当查分接口。而且数组嵌套往往难以分页。</li>
+<li>避免数组中嵌套无法预知长度的数组</li>
+<li>避免数组中嵌套无法预知深度的树，要避免无法预知数据量大小的响应体</li>
+</ul>
+<p>总之，要能够控制住响应体的大小。</p>
+<h2 id="要在请求体中封装状态信息"><a href="#要在请求体中封装状态信息" class="headerlink" title="要在请求体中封装状态信息"></a>要在请求体中封装状态信息</h2><p>200 ok 就可以说明请求成功了，没必要在请求体中再额外增加一个状态字段。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">GET</span> <span class="number">200</span> ok</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"status"</span>: <span class="string">"success"</span>,</span><br><span class="line">  <span class="string">"agents"</span>: [<span class="meta">&#123;....&#125;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="接口文档"><a href="#接口文档" class="headerlink" title="接口文档"></a>接口文档</h1><h2 id="用curl提供快速可执行例子"><a href="#用curl提供快速可执行例子" class="headerlink" title="用curl提供快速可执行例子"></a>用curl提供快速可执行例子</h2><p>不要让用户看了半天文档，也不知道怎么传参数。应当直截了当的给出一个可执行的例子。</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST https:<span class="string">//service.com/apps</span> \</span><br><span class="line">    -H <span class="string">"Content-Type: application/json"</span> \</span><br><span class="line">    -d '&#123;<span class="string">"name"</span>: <span class="string">"demoapp"</span>&#125;'</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"id"</span>: <span class="string">"01234567-89ab-cdef-0123-456789abcdef"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"demoapp"</span>,</span><br><span class="line">  <span class="string">"owner"</span>: &#123;</span><br><span class="line">    <span class="string">"email"</span>: <span class="string">"username@example.com"</span>,</span><br><span class="line">    <span class="string">"id"</span>: <span class="string">"01234567-89ab-cdef-0123-456789abcdef"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="供在线文档和离线pdf文档"><a href="#供在线文档和离线pdf文档" class="headerlink" title="供在线文档和离线pdf文档"></a>供在线文档和离线pdf文档</h2><ul>
+<li>网站 专门的在线文档静态网页，适合对外接口文档</li>
+<li>swagger 文档，适合对内接口文档</li>
+<li>markdown 文档，方便，快捷，很容易转化成pdf或者其他格式</li>
+<li>pdf文档 适合与无法访问外网的开发者</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/协议/" rel="tag"># 协议</a>
+          
+            <a href="/tags/RESTFul/" rel="tag"># RESTFul</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/问题记录/linux/ssh连接超时问题解决方案/" rel="next" title="ssh连接超时问题解决方案">
+                <i class="fa fa-chevron-left"></i> ssh连接超时问题解决方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/数据结构/算法时间复杂度计算方法/" rel="prev" title="算法时间复杂度计算方法">
+                算法时间复杂度计算方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木子三金</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/31dcad916afc" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本原则"><span class="nav-number">1.</span> <span class="nav-text">基本原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关注点分离"><span class="nav-number">1.1.</span> <span class="nav-text">关注点分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性"><span class="nav-number">1.2.</span> <span class="nav-text">一致性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本管理"><span class="nav-number">1.3.</span> <span class="nav-text">版本管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#请求"><span class="nav-number">2.</span> <span class="nav-text">请求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#最小化路径嵌套"><span class="nav-number">2.1.</span> <span class="nav-text">最小化路径嵌套</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL参数优先原则"><span class="nav-number">2.2.</span> <span class="nav-text">URL参数优先原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源名"><span class="nav-number">2.3.</span> <span class="nav-text">资源名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求方法"><span class="nav-number">2.4.</span> <span class="nav-text">请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询参数"><span class="nav-number">2.5.</span> <span class="nav-text">查询参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#翻页参数-page-pageSize"><span class="nav-number">2.5.1.</span> <span class="nav-text">翻页参数 page, pageSize</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#投影参数-fields"><span class="nav-number">2.5.2.</span> <span class="nav-text">投影参数 fields</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制器参数-actions"><span class="nav-number">2.5.3.</span> <span class="nav-text">控制器参数 actions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他字段查询参数"><span class="nav-number">2.5.4.</span> <span class="nav-text">其他字段查询参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用JSON格式的body"><span class="nav-number">2.6.</span> <span class="nav-text">使用JSON格式的body</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全限制"><span class="nav-number">2.7.</span> <span class="nav-text">安全限制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#URL参数长度限制"><span class="nav-number">2.7.1.</span> <span class="nav-text">URL参数长度限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求体body大小限制"><span class="nav-number">2.7.2.</span> <span class="nav-text">请求体body大小限制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#响应"><span class="nav-number">3.</span> <span class="nav-text">响应</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#统一资源名称"><span class="nav-number">3.1.</span> <span class="nav-text">统一资源名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提供Request-Id"><span class="nav-number">3.2.</span> <span class="nav-text">提供Request-Id</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合适的状态码"><span class="nav-number">3.3.</span> <span class="nav-text">合适的状态码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统一的错误模型"><span class="nav-number">3.4.</span> <span class="nav-text">统一的错误模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小化响应体"><span class="nav-number">3.5.</span> <span class="nav-text">小化响应体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要在请求体中封装状态信息"><span class="nav-number">3.6.</span> <span class="nav-text">要在请求体中封装状态信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#接口文档"><span class="nav-number">4.</span> <span class="nav-text">接口文档</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用curl提供快速可执行例子"><span class="nav-number">4.1.</span> <span class="nav-text">用curl提供快速可执行例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#供在线文档和离线pdf文档"><span class="nav-number">4.2.</span> <span class="nav-text">供在线文档和离线pdf文档</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" align="center">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木子三金</span>
+
+</div>
+<div class="footer-custom" align="center">
+	<a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备17015067号</a>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("w4ChT6YdxXEsHjbhGGRwKyRS-gzGzoHsz", "pbRGAYRTC7uorxePlRL7XtlF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="dubbo,validator," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="背景：最近尝试在项目内使用dubbo validation，但是遇到了一些问题，具体描述请看：启用dubbo validation后hessian反序列化异常解决方案">
+<meta name="keywords" content="dubbo,validator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义注解@Validated（兼容dubbo方法与普通方法）">
+<meta property="og:url" content="http://www.sanjinbest.com/dubbo/自定义注解-Validated使用说明（兼容dubbo方法与普通方法）/index.html">
+<meta property="og:site_name" content="木子三金">
+<meta property="og:description" content="背景：最近尝试在项目内使用dubbo validation，但是遇到了一些问题，具体描述请看：启用dubbo validation后hessian反序列化异常解决方案">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-31T10:22:13.161Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义注解@Validated（兼容dubbo方法与普通方法）">
+<meta name="twitter:description" content="背景：最近尝试在项目内使用dubbo validation，但是遇到了一些问题，具体描述请看：启用dubbo validation后hessian反序列化异常解决方案">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.sanjinbest.com/dubbo/自定义注解-Validated使用说明（兼容dubbo方法与普通方法）/"/>
+
+
+
+
+
+  <title>自定义注解@Validated（兼容dubbo方法与普通方法） | 木子三金</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木子三金</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">JAVA JVM 程序 架构 框架 区块链</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/dubbo/自定义注解-Validated使用说明（兼容dubbo方法与普通方法）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子三金">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子三金">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自定义注解@Validated（兼容dubbo方法与普通方法）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T18:11:00+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/dubbo/自定义注解-Validated使用说明（兼容dubbo方法与普通方法）/" class="leancloud_visitors" data-flag-title="自定义注解@Validated（兼容dubbo方法与普通方法）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong> 背景：最近尝试在项目内使用dubbo validation，但是遇到了一些问题，具体描述请看：<a href="http://www.sanjinbest.com/%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/dubbo/%E5%90%AF%E7%94%A8dubbo-validation%E5%90%8Ehessian%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%BC%82%E5%B8%B8%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">启用dubbo validation后hessian反序列化异常解决方案</a></strong></p>
+<a id="more"></a>
+<p>文章内的解决方案适用于新启用的项目，对于已经在运行的dubbo项目，升级成本比较高。<br>所以，写了一个基于Hibernate validator的注解@Validated</p>
+<h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ul>
+<li><p>基于Hibernate validator实现，基于aop编程方式。</p>
+</li>
+<li><p>可作用在方法和class级别，支持分组校验（方法参数分组不支持）</p>
+</li>
+<li><p>友好的响应，dubbo方法校验失败返回DubboResult对象，普通方法抛出ConstraintViolationException异常</p>
+</li>
+<li><p>结合@Valid使用，可实现嵌套校验。</p>
+</li>
+<li><p>支持dubbo2.6.X及dubbo2.7.X，后续dubbo升级该注解无需升级</p>
+</li>
+<li><p>服务提供方升级调用方无感知。</p>
+</li>
+</ul>
+<h4 id="不足："><a href="#不足：" class="headerlink" title="不足："></a>不足：</h4><ul>
+<li><p>方法级别校验目前groups参数不生效，Bean级别groups可正常使用。</p>
+</li>
+<li><p>主要针对dubbo方法及普通方法，controller层方法未测试，建议使用spring 的@Validated</p>
+</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul>
+<li>Validated</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">package</span> <span class="selector-tag">validation</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">import</span> <span class="selector-tag">org</span><span class="selector-class">.springframework</span><span class="selector-class">.stereotype</span><span class="selector-class">.Component</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">import</span> <span class="selector-tag">java</span><span class="selector-class">.lang</span><span class="selector-class">.annotation</span><span class="selector-class">.ElementType</span>;</span><br><span class="line"><span class="selector-tag">import</span> <span class="selector-tag">java</span><span class="selector-class">.lang</span><span class="selector-class">.annotation</span><span class="selector-class">.Retention</span>;</span><br><span class="line"><span class="selector-tag">import</span> <span class="selector-tag">java</span><span class="selector-class">.lang</span><span class="selector-class">.annotation</span><span class="selector-class">.RetentionPolicy</span>;</span><br><span class="line"><span class="selector-tag">import</span> <span class="selector-tag">java</span><span class="selector-class">.lang</span><span class="selector-class">.annotation</span><span class="selector-class">.Target</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ClassName Validated</span></span><br><span class="line"><span class="comment"> * 参数校验，可使用到方法、类级别</span></span><br><span class="line"><span class="comment"> * 功能：</span></span><br><span class="line"><span class="comment"> *  1.基于Hibernate Validator实现。</span></span><br><span class="line"><span class="comment"> *  2.自动识别dubbo方法和普通方法，dubbo方法校验不通过返回DubboResult对象，普通方法抛出ConstraintViolationException异常。</span></span><br><span class="line"><span class="comment"> *  3.结合&lt;a href="javax.validation.Valid"&gt;@Valid&lt;/a&gt;使用，可实现嵌套校验。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 问题：1.方法级别校验目前groups参数不生效，Bean级别groups可正常使用。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @Description</span></span><br><span class="line"><span class="comment"> * @Author lixin</span></span><br><span class="line"><span class="comment"> * @Date 2019-05-20 15:42</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@<span class="keyword">Component</span></span><br><span class="line">@<span class="keyword">Target</span>(<span class="keyword">value</span> = &#123;<span class="selector-tag">ElementType</span><span class="selector-class">.METHOD</span>,<span class="selector-tag">ElementType</span><span class="selector-class">.TYPE</span>&#125;)</span><br><span class="line">@<span class="keyword">Retention</span>(<span class="keyword">value</span> = RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface Validated &#123;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">Class</span>&lt;?&gt;<span class="selector-attr">[]</span> <span class="selector-tag">value</span>() <span class="selector-tag">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">Class</span>&lt;?&gt;<span class="selector-attr">[]</span> <span class="selector-tag">groups</span>() <span class="selector-tag">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ValidationAspect</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> validation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.demo.dubbo.DubboResult;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.<span class="keyword">annotation</span>.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.<span class="keyword">annotation</span>.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.<span class="keyword">annotation</span>.Pointcut;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.reflect.MethodSignature;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.<span class="keyword">annotation</span>.AnnotationUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.<span class="keyword">annotation</span>.Annotation;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Objects;</span><br><span class="line"><span class="keyword">import</span> java.util.function.Predicate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@ClassName</span> ValidationAspect</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> lixin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019-05-20 15:43</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidationAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Class&lt;? extends Annotation&gt; ANNOTATION_TYPE = Validated.<span class="keyword">class</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String DUBBO_2_6_X = <span class="string">"com.alibaba.dubbo.config.annotation.Service"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String DUBBO_2_7_X = <span class="string">"org.apache.dubbo.config.annotation.Service"</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(<span class="meta-string">"@annotation(validation.Validated)"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> void methodValid()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut(<span class="meta-string">"@within(validation.Validated)"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> void classValid()&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * valid parameters</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> joinPoint</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Around(value = <span class="meta-string">"methodValid() || classValid()"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> Object around(ProceedingJoinPoint joinPoint) throws Throwable &#123;</span><br><span class="line">        Object[] args = joinPoint.getArgs();</span><br><span class="line">        <span class="keyword">if</span>(Objects.isNull(args) || args.length == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> joinPoint.proceed();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();</span><br><span class="line"></span><br><span class="line">        Annotation <span class="keyword">annotation</span> = obtainMethodAnnotation(method);</span><br><span class="line">        <span class="keyword">if</span>(Objects.isNull(<span class="keyword">annotation</span>))&#123;</span><br><span class="line">            log.info(<span class="string">"no method annotation."</span>);</span><br><span class="line">            <span class="keyword">return</span> joinPoint.proceed(args);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Class&lt;?&gt;[] groups = ((Validated)<span class="keyword">annotation</span>).groups();</span><br><span class="line"></span><br><span class="line">        Validator.ValidateResult validateResult = Validator.validateMethod(joinPoint.getThis(), method, args, groups);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(validateResult.isHasErrors())&#123;</span><br><span class="line">            <span class="keyword">if</span>(dubboService(method.getDeclaringClass()))&#123;</span><br><span class="line">                <span class="keyword">return</span> DubboResult.newFailure(validateResult.toString());</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">throw</span> new ConstraintViolationException(validateResult.toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> joinPoint.proceed(args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * abtain method or class annotation</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> method</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Annotation obtainMethodAnnotation(Method method)&#123;</span><br><span class="line">        Annotation <span class="keyword">annotation</span> = AnnotationUtils.findAnnotation(method, ANNOTATION_TYPE);</span><br><span class="line">        <span class="keyword">if</span>(Objects.isNull(<span class="keyword">annotation</span>))&#123;</span><br><span class="line">            <span class="keyword">annotation</span> = AnnotationUtils.findAnnotation(method.getDeclaringClass(),ANNOTATION_TYPE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">annotation</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * is dubbo service</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> clazz</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> boolean dubboService(Class clazz)&#123;</span><br><span class="line">        <span class="keyword">return</span> Arrays.asList(clazz.getAnnotations())</span><br><span class="line">                .stream()</span><br><span class="line">                .filter(dubboServicePredicate)</span><br><span class="line">                .count() &gt; <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Predicate&lt;Annotation&gt; dubboServicePredicate = <span class="keyword">annotation</span> -&gt; &#123;</span><br><span class="line">            String annotationName = <span class="keyword">annotation</span>.annotationType().getName();</span><br><span class="line">            <span class="keyword">return</span> DUBBO_2_6_X.equals(annotationName) || DUBBO_2_7_X.equals(annotationName);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Validator</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> validation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> org.hibernate.validator.HibernateValidator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.validation.ConstraintViolation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.Validation;</span><br><span class="line"><span class="keyword">import</span> javax.validation.ValidatorFactory;</span><br><span class="line"><span class="keyword">import</span> javax.validation.executable.ExecutableValidator;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Objects;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Validation tool</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> lixin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019-05-20 14:20:21</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> jdk1.8</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Validator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> ValidatorFactory factory = Validation</span><br><span class="line">            .byProvider(HibernateValidator.class)</span><br><span class="line">            .configure()</span><br><span class="line">            .failFast(<span class="keyword">false</span>)</span><br><span class="line">            .buildValidatorFactory();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * object validator</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> javax.validation.Validator objectValidator = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * executable method validator</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ExecutableValidator methodValidator = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span>&#123;</span><br><span class="line">        objectValidator = factory.getValidator();</span><br><span class="line">        methodValidator = factory.getValidator().forExecutables();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * validate bean or with groups</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> t bean</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> groups</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> ValidResult</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ValidateResult <span class="title">validateBean</span><span class="params">(T t,Class&lt;?&gt;...groups)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buildValidateResult(objectValidator.validate(t,groups));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * validate a property of bean</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> t</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> propertyName</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> ValidResult</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ValidateResult <span class="title">validateProperty</span><span class="params">(T t, String propertyName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buildValidateResult(objectValidator.validateProperty(t, propertyName));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * validate method parameters</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> t</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> method</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> parameterValues</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> groups</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ValidateResult <span class="title">validateMethod</span><span class="params">(T t,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                Method method,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                Object[] parameterValues,</span></span></span><br><span class="line"><span class="function"><span class="params">                                                Class&lt;?&gt;... groups)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> buildValidateResult(methodValidator.validateParameters(t, method, parameterValues, groups));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * build validate result</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> violations</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ValidateResult <span class="title">buildValidateResult</span><span class="params">(Set&lt;ConstraintViolation&lt;T&gt;&gt; violations)</span></span>&#123;</span><br><span class="line">        ValidateResult result = <span class="keyword">new</span> Validator().new ValidateResult();</span><br><span class="line">        result.setHasErrors(Objects.nonNull(violations) &amp;&amp; violations.size() &gt; <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(result.isHasErrors())&#123;</span><br><span class="line">            violations.forEach(violation -&gt; result.addError(violation.getPropertyPath().toString(),violation.getMessage()));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * validate result</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ValidateResult</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * has error</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">boolean</span> hasErrors;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * error message</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">private</span> List&lt;ErrorMessage&gt; errors;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ValidateResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.errors = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * all errors</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> errors.stream()</span><br><span class="line">                    .map( e -&gt; e == <span class="keyword">null</span> ? <span class="string">"null"</span> : e.getPath() + <span class="string">": "</span> + e.getMessage() )</span><br><span class="line">                    .collect( Collectors.joining( <span class="string">", "</span> ) );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * add one error</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> propertyName</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> message</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addError</span><span class="params">(String propertyName, String message)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.errors.add(<span class="keyword">new</span> ErrorMessage(propertyName, message));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Data</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ErrorMessage</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String path;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String message;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ErrorMessage</span><span class="params">(String path, String message)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.path = path;</span><br><span class="line">            <span class="keyword">this</span>.message = message;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ConstraintViolationException</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> validation;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.bind.<span class="type">ValidationException</span>;</span><br><span class="line"><span class="keyword">import</span> java.io.<span class="type">Serializable</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ClassName ConstraintViolationException</span></span><br><span class="line"><span class="comment"> * @Description</span></span><br><span class="line"><span class="comment"> * @Author lixin</span></span><br><span class="line"><span class="comment"> * @Date 2019-05-21 17:47</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ConstraintViolationException</span> <span class="keyword">extends</span> <span class="title">ValidationException</span> <span class="title">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    public <span class="type">ConstraintViolationException</span>(<span class="type">String</span> message) &#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dubbo/" rel="tag"># dubbo</a>
+          
+            <a href="/tags/validator/" rel="tag"># validator</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/问题记录/dubbo/启用dubbo-validation后hessian反序列化异常解决方案/" rel="next" title="启用dubbo validation后hessian反序列化异常解决方案">
+                <i class="fa fa-chevron-left"></i> 启用dubbo validation后hessian反序列化异常解决方案
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木子三金</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/31dcad916afc" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点："><span class="nav-number">1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#不足："><span class="nav-number">2.</span> <span class="nav-text">不足：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" align="center">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木子三金</span>
+
+</div>
+<div class="footer-custom" align="center">
+	<a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备17015067号</a>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("w4ChT6YdxXEsHjbhGGRwKyRS-gzGzoHsz", "pbRGAYRTC7uorxePlRL7XtlF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

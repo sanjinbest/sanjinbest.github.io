@@ -82,7 +82,7 @@
 <meta name="description" content="每天进步一点点！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="木子三金">
-<meta property="og:url" content="http://www.sanjinbest.com/categories/java/index.html">
+<meta property="og:url" content="http://www.sanjinbest.com/categories/JAVA/index.html">
 <meta property="og:site_name" content="木子三金">
 <meta property="og:description" content="每天进步一点点！">
 <meta property="og:locale" content="zh-Hans">
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://www.sanjinbest.com/categories/java/"/>
+  <link rel="canonical" href="http://www.sanjinbest.com/categories/JAVA/"/>
 
 
 
 
 
-  <title>分类: java | 木子三金</title>
+  <title>分类: JAVA | 木子三金</title>
   
 
 
@@ -254,7 +254,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>java<small>分类</small>
+        <h1>JAVA<small>分类</small>
         </h1>
       </div>
 
@@ -266,9 +266,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/java/关于String内的indexOf方法的一些疑问/" itemprop="url">
+            <a class="post-title-link" href="/JAVA/JAVA-8-函数式接口-Supplier/" itemprop="url">
               
-                <span itemprop="name">关于String内的indexOf方法的一些疑问</span>
+                <span itemprop="name">JAVA 8 函数式接口--Supplier</span>
               
             </a>
         
@@ -276,9 +276,121 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-14T17:48:00+08:00"
-              content="2018-12-14" >
-          12-14
+              datetime="2018-08-31T13:59:00+08:00"
+              content="2018-08-31" >
+          08-31
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/JAVA/JAVA-8-函数式接口-Predicate/" itemprop="url">
+              
+                <span itemprop="name">JAVA 8 函数式接口--Predicate</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-08-30T19:03:00+08:00"
+              content="2018-08-30" >
+          08-30
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/JAVA/JAVA-8-函数式接口-Function/" itemprop="url">
+              
+                <span itemprop="name">JAVA 8 函数式接口--Function</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-08-30T14:15:00+08:00"
+              content="2018-08-30" >
+          08-30
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/JAVA/JAVA-8-函数式接口-Consumer/" itemprop="url">
+              
+                <span itemprop="name">JAVA 8 函数式接口--Consumer</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-08-06T15:33:00+08:00"
+              content="2018-08-06" >
+          08-06
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/JAVA/JAVA-8-新增特性/" itemprop="url">
+              
+                <span itemprop="name">JAVA 8 新增特性之Lambda表达式+方法引用</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-06-23T16:39:00+08:00"
+              content="2018-06-23" >
+          06-23
         </time>
       </div>
 
@@ -611,81 +723,6 @@
     function addCount(Counter) {
       var $visitors = $(".leancloud_visitors");
       var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
-();
       var title = $visitors.attr('data-flag-title').trim();
       var query = new AV.Query(Counter);
 

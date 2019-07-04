@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Feign,spring cloud," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Feign 让编写java http客户端变简单Fegin是一个java调用HTTP的客户端binder，其灵感来自于Retrofit、JAXRS-2.0和WebSocket。Feign的首要目标是降低将Denominator统一的绑定到HTTP的复杂性，而无需关心是否为RESTfull.">
+<meta name="keywords" content="Feign,spring cloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Feign官方文档翻译">
+<meta property="og:url" content="http://www.sanjinbest.com/spring/Feign官方文档翻译/index.html">
+<meta property="og:site_name" content="木子三金">
+<meta property="og:description" content="Feign 让编写java http客户端变简单Fegin是一个java调用HTTP的客户端binder，其灵感来自于Retrofit、JAXRS-2.0和WebSocket。Feign的首要目标是降低将Denominator统一的绑定到HTTP的复杂性，而无需关心是否为RESTfull.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-04T11:08:53.048Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Feign官方文档翻译">
+<meta name="twitter:description" content="Feign 让编写java http客户端变简单Fegin是一个java调用HTTP的客户端binder，其灵感来自于Retrofit、JAXRS-2.0和WebSocket。Feign的首要目标是降低将Denominator统一的绑定到HTTP的复杂性，而无需关心是否为RESTfull.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.sanjinbest.com/spring/Feign官方文档翻译/"/>
+
+
+
+
+
+  <title>Feign官方文档翻译 | 木子三金</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">木子三金</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">JAVA JVM 程序 架构 框架 区块链</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/spring/Feign官方文档翻译/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子三金">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子三金">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Feign官方文档翻译</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-04T17:12:00+08:00">
+                2019-07-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index">
+                    <span itemprop="name">spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/spring/Feign官方文档翻译/" class="leancloud_visitors" data-flag-title="Feign官方文档翻译">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Feign-让编写java-http客户端变简单"><a href="#Feign-让编写java-http客户端变简单" class="headerlink" title="Feign 让编写java http客户端变简单"></a>Feign 让编写java http客户端变简单</h1><p>Fegin是一个java调用HTTP的客户端binder，其灵感来自于<a href="https://github.com/square/retrofit" target="_blank" rel="noopener">Retrofit</a>、<a href="https://jax-rs-spec.java.net/nonav/2.0/apidocs/index.html" target="_blank" rel="noopener">JAXRS-2.0</a>和<a href="http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html" target="_blank" rel="noopener">WebSocket</a>。Feign的首要目标是降低将<a href="https://github.com/Netflix/Denominator" target="_blank" rel="noopener">Denominator</a>统一的绑定到HTTP的复杂性，而无需关心是否为RESTfull.</p>
+<a id="more"></a>
+<h3 id="Why-Feign-and-not-X"><a href="#Why-Feign-and-not-X" class="headerlink" title="Why Feign and not X?"></a>Why Feign and not X?</h3><p>Feign的使用方式与Jersey和CXF编写java client来调用REST或SOAP服务类似。此外，Feign还允许编写基于Apache HC之类的类库的代码。Feign通过自定义decoder和error处理以最小的成本将你的代码连接到http，并可以使用到任何基于文本的http API上。</p>
+<h3 id="Feign如何工作"><a href="#Feign如何工作" class="headerlink" title="Feign如何工作?"></a>Feign如何工作?</h3><p>Feign基于将注解转换成请求模板的方式工作。参数会简单直接的应用到模板上。尽管Feign只支持基于文本的API，但是它的简化了类似于请求重放等系统层面的开发。此外，Feign让单元测试更加方便。</p>
+<h3 id="Java-版本兼容"><a href="#Java-版本兼容" class="headerlink" title="Java 版本兼容"></a>Java 版本兼容</h3><p>Feign 10.x版本基于java 1.8同时可以在java9，10和11版本上工作。如果要在JDK6上使用，请使用Feign 9.x</p>
+<h3 id="基本使用方式"><a href="#基本使用方式" class="headerlink" title="基本使用方式"></a>基本使用方式</h3><p>下面是一个典型的用法，适配Retrofit示例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GitHub</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /repos/&#123;owner&#125;/&#123;repo&#125;/contributors"</span>)</span><br><span class="line">  <span class="function">List&lt;Contributor&gt; <span class="title">contributors</span><span class="params">(@Param(<span class="string">"owner"</span>)</span> String owner, @<span class="title">Param</span><span class="params">(<span class="string">"repo"</span>)</span> String repo)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"POST /repos/&#123;owner&#125;/&#123;repo&#125;/issues"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">createIssue</span><span class="params">(Issue issue, @Param(<span class="string">"owner"</span>)</span> String owner, @<span class="title">Param</span><span class="params">(<span class="string">"repo"</span>)</span> String repo)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Contributor</span> </span>&#123;</span><br><span class="line">  String login;</span><br><span class="line">  <span class="keyword">int</span> contributions;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line">  String title;</span><br><span class="line">  String body;</span><br><span class="line">  List&lt;String&gt; assignees;</span><br><span class="line">  <span class="keyword">int</span> milestone;</span><br><span class="line">  List&lt;String&gt; labels;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String... args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                         .decoder(<span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                         .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Fetch and print a list of the contributors to this library.</span></span><br><span class="line">    List&lt;Contributor&gt; contributors = github.contributors(<span class="string">"OpenFeign"</span>, <span class="string">"feign"</span>);</span><br><span class="line">    <span class="keyword">for</span> (Contributor contributor : contributors) &#123;</span><br><span class="line">      System.out.println(contributor.login + <span class="string">" ("</span> + contributor.contributions + <span class="string">")"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="接口注解"><a href="#接口注解" class="headerlink" title="接口注解"></a>接口注解</h3><p>Feign的注解定义了接口及其client如何工作的 <code>Contract</code>，Feign默认<code>Contract</code> 如下表。</p>
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Interface Target</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@RequestLine</code></td>
+<td>Method</td>
+<td>用来定义request 的 <code>HttpMethod</code>和<code>UriTemplate</code>。表达式（expression）使用大括号{}括起来，表达式的值会由被<code>@Param</code>注解的参数提供。</td>
+</tr>
+<tr>
+<td><code>@Param</code></td>
+<td>Parameter</td>
+<td>定义模板变量，变量的值会根据参数名解析到<code>Expression</code>内。</td>
+</tr>
+<tr>
+<td><code>@Headers</code></td>
+<td>Method或Interface</td>
+<td>定义<code>HeaderTemplate</code>，表达式的值会由被<code>@Param</code>注解的参数提供。<code>@Header</code>可以使用到<code>Method</code>或<code>Interface</code>上，当作用到<code>Interface</code>上时<code>Interface</code>内的所有方法都会使用该<code>Header</code>，如果作用到<code>Method</code>上那只会对该方法使用<code>Header</code>。</td>
+</tr>
+<tr>
+<td><code>@QueryMap</code></td>
+<td>Parameter</td>
+<td>可以修饰K-V结构的<code>Map</code>或POJO，用以扩展查询参数。</td>
+</tr>
+<tr>
+<td><code>@HeaderMap</code></td>
+<td>Parameter</td>
+<td>可以修饰K-V结构的<code>Map</code>或POJO，用以扩展<code>Http Header</code>。</td>
+</tr>
+<tr>
+<td><code>@Body</code></td>
+<td>Method</td>
+<td>与<code>UriTemplate</code>和<code>HeaderTemplate</code>类似，用来定义一个<code>Template</code>，表达式的值会由被<code>@Param</code>注解的参数提供。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="表达式（Templates）与模板（Expressions）"><a href="#表达式（Templates）与模板（Expressions）" class="headerlink" title="表达式（Templates）与模板（Expressions）"></a>表达式（Templates）与模板（Expressions）</h3><p>Feign的<code>Expressions</code>遵循<a href="https://tools.ietf.org/html/rfc6570" target="_blank" rel="noopener">URI Template - RFC 6570</a> level 1规范。<code>Expressions</code>需要配合<code>Param</code>所修饰的方法参数进行扩展。</p>
+<p><em>Example</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GitHub</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /repos/&#123;owner&#125;/&#123;repo&#125;/contributors"</span>)</span><br><span class="line">  <span class="function">List&lt;Contributor&gt; <span class="title">contributors</span><span class="params">(@Param(<span class="string">"owner"</span>)</span> String owner, @<span class="title">Param</span><span class="params">(<span class="string">"repo"</span>)</span> String repository)</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Contributor</span> </span>&#123;</span><br><span class="line">    String login;</span><br><span class="line">    <span class="keyword">int</span> contributions;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                         .decoder(<span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                         .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* The owner and repository parameters will be used to expand the owner and repo expressions</span></span><br><span class="line"><span class="comment">     * defined in the RequestLine.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * the resulting uri will be https://api.github.com/repos/OpenFeign/feign/contributors</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    github.contributors(<span class="string">"OpenFeign"</span>, <span class="string">"feign"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>表达式(Expression)：被花括号括起来的内容，可以使用正则表达式，表达式名称与正则表达式用冒号<code>:</code>分隔，比如{owner:[a-zA-Z]*}。表达式的值由被<code>@Param</code>修饰的变量提供。</li>
+<li>模板(Template)：多个表达式的集合，如<code>GET /repos/{owner}/{repo}/contributors</code></li>
+</ul>
+<h4 id="请求参数说明"><a href="#请求参数说明" class="headerlink" title="请求参数说明"></a>请求参数说明</h4><p><code>RequestLine</code> 和 <code>QueryMap</code> 的模板遵循<a href="https://tools.ietf.org/html/rfc6570" target="_blank" rel="noopener">URI Template - RFC 6570</a> level 1规范，具体的规范如下：</p>
+<ul>
+<li>忽略掉无法解析的表达式</li>
+<li>如果没有对字符串或变量进行编码或未通过<code>@Param</code>注解期编码方式，默认会使用pct-encoded编码。</li>
+</ul>
+<h4 id="未定义的值和空值"><a href="#未定义的值和空值" class="headerlink" title="未定义的值和空值"></a>未定义的值和空值</h4><p><strong>未定义的表达式也是合法的表达式</strong>，如果明确指定表达式的值为<code>Null</code>或者为空，遵循<a href="https://tools.ietf.org/html/rfc6570" target="_blank" rel="noopener">URI Template - RFC 6570</a>规范，则会提供一个空的值给表达式。<br>当Feign解析表达式时，会优先判断是否定义了表达式的值来决定是否要保留查询参数名。如果未定义表达式的值，查询参数名将会被去除，看下面的示例。</p>
+<p><em>Empty String</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   Map&lt;String, Object&gt; parameters = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">   parameters.put(<span class="string">"param"</span>, <span class="string">""</span>);</span><br><span class="line">   <span class="keyword">this</span>.demoClient.test(parameters);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Result<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//localhost:8080/test?param=</span></span><br></pre></td></tr></table></figure></p>
+<p><em>Missing</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   Map&lt;String, Object&gt; parameters = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">   <span class="keyword">this</span>.demoClient.test(parameters);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Result<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//localhost:8080/test</span></span><br></pre></td></tr></table></figure></p>
+<p><em>Undefined</em><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   Map&lt;String, Object&gt; parameters = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">   parameters.put(<span class="string">"param"</span>, <span class="keyword">null</span>);</span><br><span class="line">   <span class="keyword">this</span>.demoClient.test(parameters);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Result<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">http:</span><span class="comment">//localhost:8080/test</span></span><br></pre></td></tr></table></figure></p>
+<p> <a href="#advanced-usage">高级用法</a> 提供了更多的示例.</p>
+<blockquote>
+<p><strong>关于斜杠<code>/</code></strong></p>
+<p>默认情况下<code>@RequestLine</code> 和 <code>@QueryMap</code> 模板不会对<code>/</code>编码，如果要对其编码可以设置<code>@RequestLine</code>的<code>decodeSlash</code>值为<code>false</code>。</p>
+</blockquote>
+<blockquote>
+<p><strong>关于加号 <code>+</code></strong></p>
+<p>根据URI规范，请求地址和请求参数是允许使用加号<code>+</code>的，但是在查询的处理上可能会不一致。在一些旧的系统上<code>+</code>可能会被当作空白字符。Feign根据现代系统的做法不会将<code>+</code>当作空白字符，而是编码为<code>%2B</code>。</p>
+<p>如果要将<code>+</code>处理成空白字符，可以使用空格或者直接将其编码为<code>%20</code></p>
+</blockquote>
+<h5 id="自定义扩展"><a href="#自定义扩展" class="headerlink" title="自定义扩展"></a>自定义扩展</h5><p><code>@Param</code>可以通过可选属性<code>expander</code>对某一参数进行扩展处理。<code>expander</code>属性需要接收一个实现了Expander接口的实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Expander</span> </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">expand</span><span class="params">(Object value)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法的返回值规则与上述规则相同。忽略掉无法解析的表达式;<br>如果没有对字符串或变量进行编码或未通过@Param注解期编码方式，默认会使用pct-encoded编码。更多使用示例参考<a href="#custom-param-expansion">Custom @Param Expansion</a></p>
+<h4 id="请求头扩展"><a href="#请求头扩展" class="headerlink" title="请求头扩展"></a>请求头扩展</h4><p><code>Headers</code> 与 <code>HeaderMap</code> 模板规则与<a href="#request-parameter-expansion">Request Parameter Expansion</a> 规则相同</p>
+<ul>
+<li>如果返回值为null或空，则移除整个header</li>
+<li><p>如果未进行pct编码，则会进行pct编码</p>
+<p><a href="#headers">Headers</a> 示例代码.</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>请注意<code>@Param</code> 参数和参数名称</strong>: </p>
+<p>如果<code>@RequestLine</code>, <code>@QueryMap</code>, <code>@BodyTemplate</code>, 或 <code>@Headers</code>拥有相同的表达式名称，那么这些表达式会被赋予相同的值。如下示例中的<code>contentType</code>将会被同时解析到<code>@RequestLine</code>和<code>@Headers</code>的表达式中</p>
+</blockquote>
+<blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ContentService</span> </span>&#123;</span><br><span class="line">&gt; <span class="meta">@RequestLine</span>(<span class="string">"GET /api/documents/&#123;contentTåype&#125;"</span>)</span><br><span class="line">&gt; <span class="meta">@Headers</span>(<span class="string">"Accept: &#123;contentType&#125;"</span>)</span><br><span class="line">&gt; <span class="function">String <span class="title">getDocumentByType</span><span class="params">(@Param(<span class="string">"contentType"</span>)</span> String type)</span>;</span><br><span class="line">&gt; &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p>在设计接口时需要额外注意。</p>
+</blockquote>
+<h4 id="请求体扩展"><a href="#请求体扩展" class="headerlink" title="请求体扩展"></a>请求体扩展</h4><p><code>Body</code>模板的规则与<a href="#request-parameter-expansion">Request Parameter Expansion</a> 相同：</p>
+<ul>
+<li>忽略掉无法解析的表达式</li>
+<li>扩展内容在被传递到请求体前不会被编码</li>
+<li>必须在header内指定<code>Content-Type</code>。参考示例代码 <a href="#body-templates">Body Templates</a>。</li>
+</ul>
+<hr>
+<h3 id="定制化服务"><a href="#定制化服务" class="headerlink" title="定制化服务"></a>定制化服务</h3><p>Feign同时也提供了一些定制化的能力,你可以使用<code>Feign.builder()</code>来构建自定义的接口。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Bank</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"POST /account/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function">Account <span class="title">getAccountInfo</span><span class="params">(@Param(<span class="string">"id"</span>)</span> String id)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BankService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Bank bank = Feign.builder().decoder(</span><br><span class="line">        <span class="keyword">new</span> AccountDecoder())</span><br><span class="line">        .target(Bank.class, <span class="string">"https://api.examplebank.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>Feign支持创建多个api接口。通过继承接口<code>Target&lt;T&gt;</code>(默认实现为<code>HardCodedTarget&lt;T&gt;</code>)实现，在程序运行request前会动态的发现并包装请求。</p>
+<p>例如，下面的场景对当前使用的url增加<code>CloudIdentityTarget</code>进行auth验证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CloudService</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    CloudDNS cloudDNS = Feign.builder()</span><br><span class="line">      .target(<span class="keyword">new</span> CloudIdentityTarget&lt;CloudDNS&gt;(user, apiKey));</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">CloudIdentityTarget</span> <span class="keyword">extends</span> <span class="title">Target</span>&lt;<span class="title">CloudDNS</span>&gt; </span>&#123;</span><br><span class="line">    <span class="comment">/* implementation of a Target */</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更多示例"><a href="#更多示例" class="headerlink" title="更多示例"></a>更多示例</h3><p>Feign包含了<a href="./example-github">GitHub</a> 和 <a href="./example-wikipedia">Wikipedia</a>的客户端示例代码，以供大家作为开发参考。特殊的示例请参考<a href="https://github.com/Netflix/denominator/tree/master/example-daemon" target="_blank" rel="noopener">example daemon</a>.</p>
+<hr>
+<h3 id="集成能力"><a href="#集成能力" class="headerlink" title="集成能力"></a>集成能力</h3><p>Feign设计原则就是能够与其它开源工具友好的工作，也欢迎将您喜欢的项目集成进来。</p>
+<h3 id="Gson"><a href="#Gson" class="headerlink" title="Gson"></a>Gson</h3><p><a href="./gson">Gson</a> 包含了可以与JSON API共同使用的编码器和解码器</p>
+<p>使用<code>Feign.Builder</code>添加<code>GsonEncoder</code> 或 <code>GsonDecoder</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GsonCodec codec = <span class="keyword">new</span> GsonCodec();</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                         .encoder(<span class="keyword">new</span> GsonEncoder())</span><br><span class="line">                         .decoder(<span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                         .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Jackson"><a href="#Jackson" class="headerlink" title="Jackson"></a>Jackson</h3><p><a href="./jackson">Jackson</a>包含了可以与JSON API共同使用的编码器和解码器</p>
+<p>使用<code>Feign.Builder</code>添加<code>JacksonEncoder</code> 或 <code>JacksonDecoder</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      GitHub github = Feign.builder()</span><br><span class="line">                     .encoder(<span class="keyword">new</span> JacksonEncoder())</span><br><span class="line">                     .decoder(<span class="keyword">new</span> JacksonDecoder())</span><br><span class="line">                     .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Sax"><a href="#Sax" class="headerlink" title="Sax"></a>Sax</h3><p><a href="./sax">SaxDecoder</a> 可以在标准的JVM或Android环境下解码XML。</p>
+<p>使用Sax对响应数据进行解析<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      Api api = Feign.builder()</span><br><span class="line">         .decoder(SAXDecoder.builder()</span><br><span class="line">                            .registerContentHandler(UserIdHandler.class)</span><br><span class="line">                            .build())</span><br><span class="line">         .target(Api.class, <span class="string">"https://apihost"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JAXB"><a href="#JAXB" class="headerlink" title="JAXB"></a>JAXB</h3><p><a href="./jaxb">JAXB</a>包含了可以与XML API共同使用的编码器和解码器</p>
+<p>使用<code>Feign.Builder</code>添加<code>JAXBEncoder</code> 或 <code>JAXBDecoder</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Api api = Feign.builder()</span><br><span class="line">             .encoder(<span class="keyword">new</span> JAXBEncoder())</span><br><span class="line">             .decoder(<span class="keyword">new</span> JAXBDecoder())</span><br><span class="line">             .target(Api.class, <span class="string">"https://apihost"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="JAX-RS"><a href="#JAX-RS" class="headerlink" title="JAX-RS"></a>JAX-RS</h3><p><a href="./jaxrs">JAXRSContract</a>对标准的JAX-RS进行了重新处理，目前基于1.1规范。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GitHub</span> </span>&#123;</span><br><span class="line">  <span class="meta">@GET</span> <span class="meta">@Path</span>(<span class="string">"/repos/&#123;owner&#125;/&#123;repo&#125;/contributors"</span>)</span><br><span class="line">  <span class="function">List&lt;Contributor&gt; <span class="title">contributors</span><span class="params">(@PathParam(<span class="string">"owner"</span>)</span> String owner, @<span class="title">PathParam</span><span class="params">(<span class="string">"repo"</span>)</span> String repo)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                       .contract(<span class="keyword">new</span> JAXRSContract())</span><br><span class="line">                       .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="OkHttp"><a href="#OkHttp" class="headerlink" title="OkHttp"></a>OkHttp</h3><p>使用<a href="./okhttp">OkHttpClient</a>直接将Feign请求交由OkHttp处理，OkHttp使用了SPDY协议，可以更好的对网络进行控制</p>
+<p>Feign使用OkHttp只需要将OkHttp加入到classpath，然后配置Feign使用OkHttpClient。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                     .client(<span class="keyword">new</span> OkHttpClient())</span><br><span class="line">                     .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Ribbon"><a href="#Ribbon" class="headerlink" title="Ribbon"></a>Ribbon</h3><p><a href="./ribbon">RibbonClient</a>为Feign client重写URL解析，同时提供了智能路由和弹性能力。</p>
+<p>集成ribbon需要将url改为ribbon的客户端名称，如<code>myAppProd</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    MyService api = Feign.builder()</span><br><span class="line">          .client(RibbonClient.create())</span><br><span class="line">          .target(MyService.class, <span class="string">"https://myAppProd"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Java-11-Http2"><a href="#Java-11-Http2" class="headerlink" title="Java 11 Http2"></a>Java 11 Http2</h3><p><a href="./java11">Http2Client</a>直接将Feign http请求交由Java11 <a href="http://www.javamagazine.mozaicreader.com/JulyAug2017#&amp;pageSet=39&amp;page=0" target="_blank" rel="noopener">New HTTP/2 Client</a>处理以实现HTTP/2。</p>
+<p>若为Feign使用New HTTP/2客户端需要JDK11,然后配置Feign使用Http2Client。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GitHub github = Feign.builder()</span><br><span class="line">                     .client(<span class="keyword">new</span> Http2Client())</span><br><span class="line">                     .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Hystrix"><a href="#Hystrix" class="headerlink" title="Hystrix"></a>Hystrix</h3><p><a href="./hystrix">HystrixFeign</a>使用<a href="https://github.com/Netflix/Hystrix" target="_blank" rel="noopener">Hystrix</a>提供了断路器的支持。</p>
+<p>若要使用Hystrix，需要将Hystrix模块加入classpath。然后使用<code>HystrixFeign</code> builder。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    MyService api = HystrixFeign.builder().target(MyService.class, <span class="string">"https://myAppProd"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3><p><a href="./soap">SOAP</a>包含了可以与XML API共同使用的编码器和解码器</p>
+<p>该模块通过JAXB和SOAPMessage对SOAP Body提供编码和解码。同时将SOAPFault解码能力包装到了原生的<code>javax.xml.ws.soap.SOAPFaultException</code>，所以使用时只需要捕获<code>SOAPFaultException</code>来处理SOAPFault。</p>
+<p>Add <code>SOAPEncoder</code> and/or <code>SOAPDecoder</code> to your <code>Feign.Builder</code> like so:</p>
+<p>使用<code>Feign.Builder</code>来添加<code>SOAPEncoder</code> 或 <code>SOAPDecoder</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Api api = Feign.builder()</span><br><span class="line">	     .encoder(<span class="keyword">new</span> SOAPEncoder(jaxbFactory))</span><br><span class="line">	     .decoder(<span class="keyword">new</span> SOAPDecoder(jaxbFactory))</span><br><span class="line">	     .errorDecoder(<span class="keyword">new</span> SOAPErrorDecoder())</span><br><span class="line">	     .target(MyApi.class, <span class="string">"http://api"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：如果SOAP的错误响应包含http code (4xx、5xx、…)，则需要添加<code>SOAPErrorDecoder</code>对错误进行处理。</p>
+<h3 id="SLF4J"><a href="#SLF4J" class="headerlink" title="SLF4J"></a>SLF4J</h3><p><a href="./slf4j">SLF4JModule</a>直接将Feign’s logging交由<a href="http://www.slf4j.org/" target="_blank" rel="noopener">SLF4J</a>处理，你可以方便的选择logging的后端实现。</p>
+<p>若要使用SLF4J，需要添加SLF4J和对应的后端模块到classpath内，然后使用<code>Feign.builder</code>配置logging。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                     .logger(<span class="keyword">new</span> Slf4jLogger())</span><br><span class="line">                     .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Decoders"><a href="#Decoders" class="headerlink" title="Decoders"></a>Decoders</h3><p><code>Feign.builder()</code>可以指定Decoder对响应数据进行解码。</p>
+<p>如果接口内某些方法反回了除<code>Response</code>, <code>String</code>, <code>byte[]</code> 或 <code>void</code>之外的返回值，则需要配置一个自定义的 <code>Decoder</code>。</p>
+<p>使用gson对json进行解码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                     .decoder(<span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                     .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你需要在解码器解码之前作一些前置操作，可以使用<code>mapAndDecode</code>。<br>举个例子，现在要求API只处理jsonp，可以在传输之前不对jsonp进行包装。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    JsonpApi jsonpApi = Feign.builder()</span><br><span class="line">                         .mapAndDecode((response, type) -&gt; jsopUnwrap(response, type), <span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                         .target(JsonpApi.class, <span class="string">"https://some-jsonp-api.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Encoders"><a href="#Encoders" class="headerlink" title="Encoders"></a>Encoders</h3><p>The simplest way to send a request body to a server is to define a <code>POST</code> method that has a <code>String</code> or <code>byte[]</code> parameter without any annotations on it. You will likely need to add a <code>Content-Type</code> header.</p>
+<p>一个最简单的请求方式就是使用<code>POST</code>方法传递一个<code>String</code>或<code>byte[]</code>类型参数到服务端，有时可能需要在header内指定<code>Content-Type</code>，如下方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">LoginClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"POST /"</span>)</span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-Type: application/json"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">(String content)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    client.login(<span class="string">"&#123;\"user_name\": \"denominator\", \"password\": \"secret\"&#125;"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这里可以使用<code>Encoder</code>配置方式，这样就可以发送一些类型安全的请求体。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Credentials</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> String user_name;</span><br><span class="line">  <span class="keyword">final</span> String password;</span><br><span class="line"></span><br><span class="line">  Credentials(String user_name, String password) &#123;</span><br><span class="line">    <span class="keyword">this</span>.user_name = user_name;</span><br><span class="line">    <span class="keyword">this</span>.password = password;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">LoginClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"POST /"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">login</span><span class="params">(Credentials creds)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    LoginClient client = Feign.builder()</span><br><span class="line">                              .encoder(<span class="keyword">new</span> GsonEncoder())</span><br><span class="line">                              .target(LoginClient.class, <span class="string">"https://foo.com"</span>);</span><br><span class="line">    </span><br><span class="line">    client.login(<span class="keyword">new</span> Credentials(<span class="string">"denominator"</span>, <span class="string">"secret"</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Body-模板"><a href="#Body-模板" class="headerlink" title="@Body 模板"></a>@Body 模板</h3><p><code>@Body</code>注解用来声明一个请求体模板，并配合<code>@Param</code>注解对请求参数进行扩展。在使用时需要指定<code>Content-Type</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">LoginClient</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"POST /"</span>)</span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-Type: application/xml"</span>)</span><br><span class="line">  <span class="meta">@Body</span>(<span class="string">"&lt;login \"user_name\"=\"&#123;user_name&#125;\" \"password\"=\"&#123;password&#125;\"/&gt;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">xml</span><span class="params">(@Param(<span class="string">"user_name"</span>)</span> String user, @<span class="title">Param</span><span class="params">(<span class="string">"password"</span>)</span> String password)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"POST /"</span>)</span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-Type: application/json"</span>)</span><br><span class="line">  <span class="comment">// json curly braces must be escaped!</span></span><br><span class="line">  <span class="meta">@Body</span>(<span class="string">"%7B\"user_name\": \"&#123;user_name&#125;\", \"password\": \"&#123;password&#125;\"%7D"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">json</span><span class="params">(@Param(<span class="string">"user_name"</span>)</span> String user, @<span class="title">Param</span><span class="params">(<span class="string">"password"</span>)</span> String password)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    client.xml(<span class="string">"denominator"</span>, <span class="string">"secret"</span>); <span class="comment">// &lt;login "user_name"="denominator" "password"="secret"/&gt;</span></span><br><span class="line">    client.json(<span class="string">"denominator"</span>, <span class="string">"secret"</span>); <span class="comment">// &#123;"user_name": "denominator", "password": "secret"&#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Headers"><a href="#Headers" class="headerlink" title="Headers"></a>Headers</h3><p>Feign支持API和单独客户端2个层面的headers配置。</p>
+<h4 id="API层面配置"><a href="#API层面配置" class="headerlink" title="API层面配置"></a>API层面配置</h4><p>如果接口内的多个方法都需要包含相同headers配置，可以将headers配置在API接口上。</p>
+<p>同时在API接口和接口方法上使用<code>@Headers</code> 。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Headers</span>(<span class="string">"Accept: application/json"</span>)</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">BaseApi</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-Type: application/json"</span>)</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"PUT /api/&#123;key&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(@Param(<span class="string">"key"</span>)</span> String key, V value)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@Headers</code>根据根据表达式的值，动态的从<code>@Param</code>内获取对应的内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">   <span class="meta">@RequestLine</span>(<span class="string">"POST /"</span>)</span><br><span class="line">   <span class="meta">@Headers</span>(<span class="string">"X-Ping: &#123;token&#125;"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">post</span><span class="params">(@Param(<span class="string">"token"</span>)</span> String token)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有时可能需要动态的指定headers内的key和value。这类场景可以使用<code>HeaderMap</code> 来动态传入headers的key和value。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">   <span class="meta">@RequestLine</span>(<span class="string">"POST /"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">post</span><span class="params">(@HeaderMap Map&lt;String, Object&gt; headerMap)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="动态header"><a href="#动态header" class="headerlink" title="动态header"></a>动态header</h4><p>如果一个API接口会被不同的目标端使用，同时需要指定不同的headers，或者在发送请求时作特殊处理。可以通过<code>RequestInterceptor</code> 或者<br><code>Target</code>来实现</p>
+<p>使用<code>RequestInterceptor</code>的例子可以参考<code>Request Interceptors</code>章节。下面是使用<code>Target</code>的实现方式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicAuthTokenTarget</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Target</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">DynamicAuthTokenTarget</span><span class="params">(Class&lt;T&gt; clazz,</span></span></span><br><span class="line"><span class="function"><span class="params">                                UrlAndTokenProvider provider,</span></span></span><br><span class="line"><span class="function"><span class="params">                                ThreadLocal&lt;String&gt; requestIdProvider)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Request <span class="title">apply</span><span class="params">(RequestTemplate input)</span> </span>&#123;</span><br><span class="line">    TokenIdAndPublicURL urlAndToken = provider.get();</span><br><span class="line">    <span class="keyword">if</span> (input.url().indexOf(<span class="string">"http"</span>) != <span class="number">0</span>) &#123;</span><br><span class="line">      input.insert(<span class="number">0</span>, urlAndToken.publicURL);</span><br><span class="line">    &#125;</span><br><span class="line">    input.header(<span class="string">"X-Auth-Token"</span>, urlAndToken.tokenId);</span><br><span class="line">    input.header(<span class="string">"X-Request-ID"</span>, requestIdProvider.get());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> input.request();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Bank bank = Feign.builder()</span><br><span class="line">            .target(<span class="keyword">new</span> DynamicAuthTokenTarget(Bank.class, provider, requestIdProvider));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述这些实现是在Feign client构建和使用时，通过自定义<code>RequestInterceptor</code> 或 <code>Target</code> 来设置headers，这种方式可以配置在每一个Feign client上，同时也会对所有的API接口生效。这是一个很实用的功能，比如为所有client的每一个请求header增加auth token。这些扩展方法与API方法调用使用同一个线程，所以在API方法运行时可以根据上下文动态的指定headers的内容，比如，可以使用ThreadLocal为每个请求线程存储不同的header内容，对于实现特殊的请求线程链路追踪是比较有用的方式。</p>
+<h3 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h3><h4 id="基础api"><a href="#基础api" class="headerlink" title="基础api"></a>基础api</h4><p>有时，某些服务的api会使用相同的约束。Feign可以使用接口单继承的方式进行配置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">BaseAPI</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /health"</span>)</span><br><span class="line">  <span class="function">String <span class="title">health</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /all"</span>)</span><br><span class="line">  <span class="function">List&lt;Entity&gt; <span class="title">all</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过继承来扩展基础api的能力。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">CustomAPI</span> <span class="keyword">extends</span> <span class="title">BaseAPI</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /custom"</span>)</span><br><span class="line">  <span class="function">String <span class="title">custom</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也可以通过泛型，约束API接口的操作对象类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Headers</span>(<span class="string">"Accept: application/json"</span>)</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">BaseApi</span>&lt;<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /api/&#123;key&#125;"</span>)</span><br><span class="line">  <span class="function">V <span class="title">get</span><span class="params">(@Param(<span class="string">"key"</span>)</span> String key)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /api"</span>)</span><br><span class="line">  <span class="function">List&lt;V&gt; <span class="title">list</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Headers</span>(<span class="string">"Content-Type: application/json"</span>)</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"PUT /api/&#123;key&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">put</span><span class="params">(@Param(<span class="string">"key"</span>)</span> String key, V value)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">FooApi</span> <span class="keyword">extends</span> <span class="title">BaseApi</span>&lt;<span class="title">Foo</span>&gt; </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">BarApi</span> <span class="keyword">extends</span> <span class="title">BaseApi</span>&lt;<span class="title">Bar</span>&gt; </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a>Logging</h4><p>通过<code>logger</code>可以对API接口的调用日志作一些特殊处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    GitHub github = Feign.builder()</span><br><span class="line">                     .decoder(<span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                     .logger(<span class="keyword">new</span> Logger.JavaLogger().appendToFile(<span class="string">"logs/http.log"</span>))</span><br><span class="line">                     .logLevel(Logger.Level.FULL)</span><br><span class="line">                     .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h4><p>你可以使用<code>RequestInterceptor</code>拦截所有的请求，比如作为中间请求代理你可以设置<code>X-Forwarded-For</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ForwardedForInterceptor</span> <span class="keyword">implements</span> <span class="title">RequestInterceptor</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">apply</span><span class="params">(RequestTemplate template)</span> </span>&#123;</span><br><span class="line">    template.header(<span class="string">"X-Forwarded-For"</span>, <span class="string">"origin.host.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Bank bank = Feign.builder()</span><br><span class="line">                 .decoder(accountDecoder)</span><br><span class="line">                 .requestInterceptor(<span class="keyword">new</span> ForwardedForInterceptor())</span><br><span class="line">                 .target(Bank.class, <span class="string">"https://api.examplebank.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或是使用<code>BasicAuthRequestInterceptor</code>来实现一个身份验证拦截器。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Bank bank = Feign.builder()</span><br><span class="line">                 .decoder(accountDecoder)</span><br><span class="line">                 .requestInterceptor(<span class="keyword">new</span> BasicAuthRequestInterceptor(username, password))</span><br><span class="line">                 .target(Bank.class, <span class="string">"https://api.examplebank.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="自定义-Param"><a href="#自定义-Param" class="headerlink" title="自定义 @Param"></a>自定义 @Param</h4><p>被<code>Param</code>注解的参数最终都是通过<code>toString</code>返回参数值，通过<code>Param.Expander</code>设置自定义扩展，比如格式化日期。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /?since=&#123;date&#125;"</span>) <span class="function">Result <span class="title">list</span><span class="params">(@Param(value = <span class="string">"date"</span>, expander = DateToMillis.class)</span> Date date)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="动态查询参数"><a href="#动态查询参数" class="headerlink" title="动态查询参数"></a>动态查询参数</h4><p>可以对Map类型参数使用<code>QueryMap</code>注解，Map类型参数的K-V就是查询的参数名及参数值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /find"</span>)</span><br><span class="line">  <span class="function">V <span class="title">find</span><span class="params">(@QueryMap Map&lt;String, Object&gt; queryMap)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>QueryMapEncoder</code>同样可以通过JAVA BEAN生成查询参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Api</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /find"</span>)</span><br><span class="line">  <span class="function">V <span class="title">find</span><span class="params">(@QueryMap CustomPojo customPojo)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用上面的方式，如果没有自定义<code>QueryMapEncoder</code>，那么查询参数名将默认使用对象的成员变量名生成。使用JAVA BEAN生成如下参数”/find?name={name}&amp;number={number}”(如果成员变量的值为null，则参数会被忽略)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomPojo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> String name;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> number;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">CustomPojo</span> <span class="params">(String name, <span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">    <span class="keyword">this</span>.number = number;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置自定义的<code>QueryMapEncoder</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    MyApi myApi = Feign.builder()</span><br><span class="line">                 .queryMapEncoder(<span class="keyword">new</span> MyCustomQueryMapEncoder())</span><br><span class="line">                 .target(MyApi.class, <span class="string">"https://api.hostname.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用<code>@QueryMap</code>注解对象时，默认编码器通过反射方式查找对象属性，并将属性转换成string类型。如果你希望使用getter和setter来构建查询字符串，你需要在Java Bean内定义getter和setter方法，并使用<code>BeanQueryMapEncoder</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    MyApi myApi = Feign.builder()</span><br><span class="line">                 .queryMapEncoder(<span class="keyword">new</span> BeanQueryMapEncoder())</span><br><span class="line">                 .target(MyApi.class, <span class="string">"https://api.hostname.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>通过Feign.builder为Feign实例注册一个自定义的<code>ErrorDecoder</code>，可以对异常的响应作额外的处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    MyApi myApi = Feign.builder()</span><br><span class="line">                 .errorDecoder(<span class="keyword">new</span> MyErrorDecoder())</span><br><span class="line">                 .target(MyApi.class, <span class="string">"https://api.hostname.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所有HTTP code为非2xx的响应都会触发 <code>ErrorDecoder</code>的<code>decode</code>方法，可以在该方法内对响应进行处理，包装自定义的异常或执行一些额外逻辑。</p>
+<p>如果想要对失败请求进行重试，可以抛出一个<code>RetryableException</code>，则会使用已注册的<code>Retryer</code>进行重试.</p>
+<h3 id="重试"><a href="#重试" class="headerlink" title="重试"></a>重试</h3><p>Feign默认会自动重试所有抛出了<code>IOException</code>的方法，也会自动重试<code>ErrorDecoder</code>抛出的<code>RetryableException</code>请求。可以通过builder注册自定义的<code>Retryer</code>来实现自定义的重试策略。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Example</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    MyApi myApi = Feign.builder()</span><br><span class="line">                 .retryer(<span class="keyword">new</span> MyRetryer())</span><br><span class="line">                 .target(MyApi.class, <span class="string">"https://api.hostname.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Retryer</code>根据方法<code>continueOrPropagate(RetryableException e)</code>返回<code>true</code> 或者<code>false</code>来决定是否进行重试，<code>Retryer</code>在每个<code>Client</code>创建时指定，可以根据不同的场景使用特定的重试策略。<br>如果重试失败最终的抛出一个<code>RetryException</code>异常。可以通过为Feign client配置<code>exceptionPropagationPolicy()</code>选项，会输出请求失败的原始异常信息。</p>
+<h4 id="静态方式和默认方法"><a href="#静态方式和默认方法" class="headerlink" title="静态方式和默认方法"></a>静态方式和默认方法</h4><p>Feign的目标接口可以包含静态方法或者默认方法（jdk版本需要1.8及以上）。可以用来定义不包含其它逻辑的Feign client基础api。比如，使用静态方法创建一个普通client；默认方法则可以被用来组装查询或定义默认参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">GitHub</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /repos/&#123;owner&#125;/&#123;repo&#125;/contributors"</span>)</span><br><span class="line">  <span class="function">List&lt;Contributor&gt; <span class="title">contributors</span><span class="params">(@Param(<span class="string">"owner"</span>)</span> String owner, @<span class="title">Param</span><span class="params">(<span class="string">"repo"</span>)</span> String repo)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestLine</span>(<span class="string">"GET /users/&#123;username&#125;/repos?sort=&#123;sort&#125;"</span>)</span><br><span class="line">  <span class="function">List&lt;Repo&gt; <span class="title">repos</span><span class="params">(@Param(<span class="string">"username"</span>)</span> String owner, @<span class="title">Param</span><span class="params">(<span class="string">"sort"</span>)</span> String sort)</span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">default</span> List&lt;Repo&gt; <span class="title">repos</span><span class="params">(String owner)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> repos(owner, <span class="string">"full_name"</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Lists all contributors for all repos owned by a user.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">default</span> List&lt;Contributor&gt; <span class="title">contributors</span><span class="params">(String user)</span> </span>&#123;</span><br><span class="line">    MergingContributorList contributors = <span class="keyword">new</span> MergingContributorList();</span><br><span class="line">    <span class="keyword">for</span>(Repo repo : <span class="keyword">this</span>.repos(owner)) &#123;</span><br><span class="line">      contributors.addAll(<span class="keyword">this</span>.contributors(user, repo.getName()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> contributors.mergeResult();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">static</span> GitHub <span class="title">connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Feign.builder()</span><br><span class="line">                .decoder(<span class="keyword">new</span> GsonDecoder())</span><br><span class="line">                .target(GitHub.class, <span class="string">"https://api.github.com"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Feign/" rel="tag"># Feign</a>
+          
+            <a href="/tags/spring-cloud/" rel="tag"># spring cloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/dubbo/自定义注解-Validated使用说明（兼容dubbo方法与普通方法）/" rel="next" title="自定义注解@Validated（兼容dubbo方法与普通方法）">
+                <i class="fa fa-chevron-left"></i> 自定义注解@Validated（兼容dubbo方法与普通方法）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">木子三金</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/31dcad916afc" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-globe"></i>简书</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Feign-让编写java-http客户端变简单"><span class="nav-number">1.</span> <span class="nav-text">Feign 让编写java http客户端变简单</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-Feign-and-not-X"><span class="nav-number">1.0.1.</span> <span class="nav-text">Why Feign and not X?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feign如何工作"><span class="nav-number">1.0.2.</span> <span class="nav-text">Feign如何工作?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-版本兼容"><span class="nav-number">1.0.3.</span> <span class="nav-text">Java 版本兼容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用方式"><span class="nav-number">1.0.4.</span> <span class="nav-text">基本使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口注解"><span class="nav-number">1.0.5.</span> <span class="nav-text">接口注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表达式（Templates）与模板（Expressions）"><span class="nav-number">1.0.6.</span> <span class="nav-text">表达式（Templates）与模板（Expressions）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求参数说明"><span class="nav-number">1.0.6.1.</span> <span class="nav-text">请求参数说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#未定义的值和空值"><span class="nav-number">1.0.6.2.</span> <span class="nav-text">未定义的值和空值</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义扩展"><span class="nav-number">1.0.6.2.1.</span> <span class="nav-text">自定义扩展</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求头扩展"><span class="nav-number">1.0.6.3.</span> <span class="nav-text">请求头扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求体扩展"><span class="nav-number">1.0.6.4.</span> <span class="nav-text">请求体扩展</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定制化服务"><span class="nav-number">1.0.7.</span> <span class="nav-text">定制化服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多态"><span class="nav-number">1.0.8.</span> <span class="nav-text">多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多示例"><span class="nav-number">1.0.9.</span> <span class="nav-text">更多示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集成能力"><span class="nav-number">1.0.10.</span> <span class="nav-text">集成能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gson"><span class="nav-number">1.0.11.</span> <span class="nav-text">Gson</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jackson"><span class="nav-number">1.0.12.</span> <span class="nav-text">Jackson</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sax"><span class="nav-number">1.0.13.</span> <span class="nav-text">Sax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JAXB"><span class="nav-number">1.0.14.</span> <span class="nav-text">JAXB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JAX-RS"><span class="nav-number">1.0.15.</span> <span class="nav-text">JAX-RS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OkHttp"><span class="nav-number">1.0.16.</span> <span class="nav-text">OkHttp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ribbon"><span class="nav-number">1.0.17.</span> <span class="nav-text">Ribbon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-11-Http2"><span class="nav-number">1.0.18.</span> <span class="nav-text">Java 11 Http2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hystrix"><span class="nav-number">1.0.19.</span> <span class="nav-text">Hystrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOAP"><span class="nav-number">1.0.20.</span> <span class="nav-text">SOAP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SLF4J"><span class="nav-number">1.0.21.</span> <span class="nav-text">SLF4J</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decoders"><span class="nav-number">1.0.22.</span> <span class="nav-text">Decoders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Encoders"><span class="nav-number">1.0.23.</span> <span class="nav-text">Encoders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Body-模板"><span class="nav-number">1.0.24.</span> <span class="nav-text">@Body 模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Headers"><span class="nav-number">1.0.25.</span> <span class="nav-text">Headers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#API层面配置"><span class="nav-number">1.0.25.1.</span> <span class="nav-text">API层面配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态header"><span class="nav-number">1.0.25.2.</span> <span class="nav-text">动态header</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级用法"><span class="nav-number">1.0.26.</span> <span class="nav-text">高级用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础api"><span class="nav-number">1.0.26.1.</span> <span class="nav-text">基础api</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Logging"><span class="nav-number">1.0.26.2.</span> <span class="nav-text">Logging</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拦截器"><span class="nav-number">1.0.26.3.</span> <span class="nav-text">拦截器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义-Param"><span class="nav-number">1.0.26.4.</span> <span class="nav-text">自定义 @Param</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态查询参数"><span class="nav-number">1.0.26.5.</span> <span class="nav-text">动态查询参数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误处理"><span class="nav-number">1.0.27.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重试"><span class="nav-number">1.0.28.</span> <span class="nav-text">重试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态方式和默认方法"><span class="nav-number">1.0.28.1.</span> <span class="nav-text">静态方式和默认方法</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" align="center">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木子三金</span>
+
+</div>
+<div class="footer-custom" align="center">
+	<a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备17015067号</a>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("w4ChT6YdxXEsHjbhGGRwKyRS-gzGzoHsz", "pbRGAYRTC7uorxePlRL7XtlF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

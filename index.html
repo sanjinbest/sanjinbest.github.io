@@ -262,6 +262,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/实用工具/RedisLock基于Redis的分布式锁注解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="木子三金">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子三金">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/实用工具/RedisLock基于Redis的分布式锁注解/" itemprop="url">@RedisLock基于Redis的分布式锁注解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-16T10:38:00+08:00">
+                2019-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实用工具/" itemprop="url" rel="index">
+                    <span itemprop="name">实用工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/实用工具/RedisLock基于Redis的分布式锁注解/" class="leancloud_visitors" data-flag-title="@RedisLock基于Redis的分布式锁注解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>背景：日常开发中分布式锁是一个常用的工具，通常我们都是手动在代码里获取-释放锁，我们每次都需要写重复的代码，且易出现锁忘记释放的情况。因此封装了一个基于Redis的分布式锁实现。</p>
+</blockquote>
+<h1 id="使用方式及约束"><a href="#使用方式及约束" class="headerlink" title="使用方式及约束"></a>使用方式及约束</h1><h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><p>示例代码：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 分布式锁示例</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RedisLock</span>(prefixKey = <span class="string">"redisLockKey"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">redisLockDemo</span><span class="params">(String key)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><ul>
+<li>@RedisLock注解作用于<strong>方法</strong>之上。</li>
+<li>要求方法的返回值为 <strong>void</strong></li>
+<li>且方法的<strong>第一个参数为锁的key</strong></li>
+<li>注解强制提供<strong>prefixKey</strong>参数，防止key重复</li>
+<li>获取锁失败会抛出<strong>LockedFailException</strong>异常，可自行捕获并处理</li>
+<li>由于依赖Redis，固需要自行注入redisClient</li>
+</ul>
+<h1 id="参详详解"><a href="#参详详解" class="headerlink" title="参详详解"></a>参详详解</h1><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>必要</th>
+<th>含义</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prefixKey</td>
+<td>Y</td>
+<td>分布式锁key前缀</td>
+<td>无</td>
+</tr>
+<tr>
+<td>expire</td>
+<td>N</td>
+<td>锁过期时间</td>
+<td>5 <em> 60 </em> 1_000L</td>
+</tr>
+<tr>
+<td>retryTimes</td>
+<td>N</td>
+<td>获取锁失败重试次数</td>
+<td>3</td>
+</tr>
+<tr>
+<td>sleepMillis</td>
+<td>N</td>
+<td>获取锁失败重试间隔时间</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h1><h2 id="RedisLock"><a href="#RedisLock" class="headerlink" title="@RedisLock"></a>@RedisLock</h2><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 基于redis的锁工具</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 约定：使用方法的第一个参数为key的扩展变量</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 注解会隐式抛出2类异常：</span></span><br><span class="line"><span class="comment"> * @throws LockedFailException  获取锁失败</span></span><br><span class="line"><span class="comment"> * @throws Throwable  目标方法执行异常</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @Author lixin</span></span><br><span class="line"><span class="comment"> * @Date 2019-04-26 22:04</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable">@Component</span></span><br><span class="line"><span class="variable">@Target</span>(value = &#123;ElementType.METHOD&#125;)</span><br><span class="line"><span class="variable">@Retention</span>(value = RetentionPolicy.RUNTIME)</span><br><span class="line">public <span class="variable">@interface</span> RedisLock &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * key prefix</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="selector-tag">String</span> <span class="selector-tag">prefixKey</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * expire. default = 5 * 60 * 1_000L</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="selector-tag">long</span> <span class="selector-tag">expire</span>() <span class="selector-tag">default</span> <span class="selector-tag">5</span> * <span class="selector-tag">60</span> * <span class="selector-tag">1_000L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * retyr times. default = 3</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">retryTimes</span>() <span class="selector-tag">default</span> <span class="selector-tag">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * sleep millis. default = 60 * 100</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="selector-tag">long</span> <span class="selector-tag">sleepMillis</span>() <span class="selector-tag">default</span> <span class="selector-tag">100</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="RedisLockAspect-java"><a href="#RedisLockAspect-java" class="headerlink" title="RedisLockAspect.java"></a>RedisLockAspect.java</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * redis锁切面实现</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> lixin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019-04-26 22:11</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisLockAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RedisUtil redisUtil;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(redisLock)"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">locked</span><span class="params">(RedisLock redisLock)</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function">RedisUtil <span class="title">getRedisUtil</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> redisUtil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setRedisUtil</span><span class="params">(RedisUtil redisUtil)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.redisUtil = redisUtil;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> joinPoint</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> redisLock</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> LockedFailException  获取锁失败</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Throwable  目标方法执行异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"locked(redisLock)"</span>)</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">around</span><span class="params">(ProceedingJoinPoint joinPoint, RedisLock redisLock)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        String key = redisLock.prefixKey() + joinPoint.getArgs()[<span class="number">0</span>];</span><br><span class="line">        String value = UUID.randomUUID().toString();</span><br><span class="line">        <span class="keyword">boolean</span> locked = redisUtil.tryGetDistributedLock(</span><br><span class="line">                key,</span><br><span class="line">                value,</span><br><span class="line">                redisLock.expire(),</span><br><span class="line">                redisLock.retryTimes(),</span><br><span class="line">                redisLock.sleepMillis());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!locked)&#123;</span><br><span class="line">            log.<span class="keyword">error</span>(<span class="string">"RedisLockAspect try get lock fail.key:&#123;&#125;,value:&#123;&#125;"</span>,key,value);</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> LockedFailException(<span class="string">"try get distributed lock fail.key:"</span>+key);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        log.info(<span class="string">"RedisLockAspect try get lock success. key : &#123;&#125;,value : &#123;&#125;"</span>,key,value);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            joinPoint.<span class="keyword">proceed</span>();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            redisUtil.releaseDistributedLock(key,value);</span><br><span class="line">            log.info(<span class="string">"RedisLockAspect unlock. key : &#123;&#125;,value : &#123;&#125;"</span>,key,value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="LockedFailException-java"><a href="#LockedFailException-java" class="headerlink" title="LockedFailException.java"></a>LockedFailException.java</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @ClassName LockedFailException</span></span><br><span class="line"><span class="comment"> * @Description</span></span><br><span class="line"><span class="comment"> * @Author lixin</span></span><br><span class="line"><span class="comment"> * @Date 2019-04-28 15:09</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LockedFailException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="type">LockedFailException</span>(<span class="type">String</span> msg)&#123;</span><br><span class="line">        <span class="keyword">super</span>(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/mysql/MySQL-加锁处理分析-转载/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1697,177 +1900,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.sanjinbest.com/问题记录/linux/ubuntu锁定屏幕后显示“Authentication-Failure-Switch-to-greeter-”/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="木子三金">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="木子三金">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/问题记录/linux/ubuntu锁定屏幕后显示“Authentication-Failure-Switch-to-greeter-”/" itemprop="url">ubuntu锁定屏幕后显示“Authentication Failure Switch to greeter...”</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T18:16:00+08:00">
-                2018-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/问题记录/" itemprop="url" rel="index">
-                    <span itemprop="name">问题记录</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/问题记录/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/问题记录/linux/ubuntu锁定屏幕后显示“Authentication-Failure-Switch-to-greeter-”/" class="leancloud_visitors" data-flag-title="ubuntu锁定屏幕后显示“Authentication Failure Switch to greeter...”">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>Ubuntu版本：Ubuntu 16.04.5 LTS</li>
-<li>问题描述：锁屏后登录框提示“Authentication Failure Switch to greeter…”</li>
-<li>bug记录地址：<a href="https://bugs.launchpad.net/ubuntu/+source/unity/+bug/1733557" target="_blank" rel="noopener">Authentication Failure</a></li>
-<li>解决方法：在命令行执行如下命令：<pre><code>$ sudo apt install --reinstall lightdm
-$ sudo service lightdm restart
-</code></pre>注意，第二个命令会停止当前打开的app和进程，请保存数据后在执行。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1918,7 +1950,7 @@ $ sudo service lightdm restart
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1940,7 +1972,7 @@ $ sudo service lightdm restart
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

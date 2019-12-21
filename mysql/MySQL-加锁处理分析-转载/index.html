@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-90.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-91.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-92.png">
-<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-93.png">
+<meta property="og:image" content="http://www.sanjinbest.com/images/pasted-104.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-95.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-96.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-97.png">
@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-100.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-102.png">
 <meta property="og:image" content="http://www.sanjinbest.com/images/pasted-103.png">
-<meta property="og:updated_time" content="2019-12-21T03:53:14.441Z">
+<meta property="og:updated_time" content="2019-12-21T07:04:55.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 加锁处理分析(转载)">
 <meta name="twitter:description" content="转载自何登成的 《MySQL 加锁处理分析》 由于原作者的博客图片无法展示，特转载并补充对应的原图。 背景MySQL/InnoDB的加锁分析，一直是一个比较困难的话题。我在工作过程中，经常会有同事咨询这方面的问题。同时，微博上也经常会收到MySQL锁相关的私信，让我帮助解决一些死锁的问题。本文，准备就MySQL/InnoDB的加锁问题，展开较为深入的分析与讨论，主要是介绍一种思路，运用此思路，拿到">
@@ -477,7 +477,7 @@
 <p><img src="/images/pasted-92.png" alt="upload successful"></p>
 <p><strong>结论：id是主键时，此SQL只需要在id=10这条记录上加X锁即可。</strong></p>
 <h2 id="组合二：id唯一索引-RC"><a href="#组合二：id唯一索引-RC" class="headerlink" title="组合二：id唯一索引+RC"></a><strong>组合二：id唯一索引+RC</strong></h2><p>这个组合，id不是主键，而是一个Unique的二级索引键值。那么在RC隔离级别下，delete from t1 where id = 10; 需要加什么锁呢？见下图：</p>
-<p><img src="/images/pasted-93.png" alt="upload successful"></p>
+<p><img src="/images/pasted-104.png" alt="upload successful"></p>
 <p>此组合中，id是unique索引，而主键是name列。此时，加锁的情况由于组合一有所不同。由于id是unique索引，因此delete语句会选择走id列的索引进行where条件的过滤，在找到id=10的记录后，首先会将unique索引上的id=10索引记录加上X锁，同时，会根据读取到的name列，回主键索引(聚簇索引)，然后将聚簇索引上的name = ‘d’ 对应的主键索引项加X锁。<br>为什么聚簇索引上的记录也要加锁？试想一下，如果并发的一个SQL，是通过主键索引来更新：update t1 set id = 100 where name = ‘d’; 此时，如果delete语句没有将主键索引上的记录加锁，那么并发的update就会感知不到delete语句的存在，违背了同一记录上的更新/删除需要串行执行的约束。</p>
 <p><strong>结论：若id列是unique列，其上有unique索引。那么SQL需要加两个X锁，一个对应于id unique索引上的id = 10的记录，另一把锁对应于聚簇索引上的[name=’d’,id=10]的记录。</strong></p>
 <h2 id="组合三：id非唯一索引-RC"><a href="#组合三：id非唯一索引-RC" class="headerlink" title="组合三：id非唯一索引+RC"></a><strong>组合三：id非唯一索引+RC</strong></h2><p>相对于组合一、二，组合三又发生了变化，隔离级别仍旧是RC不变，但是id列上的约束又降低了，id列不再唯一，只有一个普通的索引。假设delete from t1 where id = 10; 语句，仍旧选择id列上的索引进行过滤where条件，那么此时会持有哪些锁？同样见下图：</p>
